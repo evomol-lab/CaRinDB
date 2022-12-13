@@ -1,0 +1,125 @@
+# ==== ui.R ===============================================================
+ui <- fluidPage(
+  tags$head(
+    tags$style(
+      HTML(
+        "div#driver-popover-item {
+          max-width: 700px;
+          width: 700px;
+          background-color: #E0FFFF;
+          color: #191970;
+        }
+        div#driver-highlighted-element-stage, div#driver-page-overlay {
+          background: transparent !important;
+          outline: 5000px solid rgba(0, 0, 0, .75)
+        }
+        "
+      )
+    ),
+   # includeHTML("www/google-analytics.html")
+  ),
+    # Application title
+  titlePanel(
+    windowTitle = "CaRinDB",
+    title = tags$head(tags$link(rel="icon",
+                                href=img_uri_favicon("icons/favicon.png"),
+                                type="image/x-icon"))
+  ),
+  navbarPage(
+    windowTitle = "CaRinDB",
+    div(img(src="favicon.png", align="left", width="50px"), style="border: 0px; padding:0px; margin: 0px 0 0 0px;" ), 
+    id = "nav",
+    position = "fixed-top",
+    br(br()),
+    # ==== Tab CaRinDB ===============================================================
+    tabPanel('CaRinDB',
+             fluidRow(
+               column(12, wellPanel(p("
+        The CaRinDB is a new database ."), 
+                                    #br(),
+                                    #icon("cog", lib = "glyphicon"), 
+                                    #em( "Click on legends of plots to activate or deactivate labels."), br(),
+                                    icon("cog", lib = "glyphicon"),                                           
+                                    em( "Use ",
+                                    a("regex", href="misc/cheatsheets_regex.pdf", target="_blank"), 
+                                        " to search in datatables."
+                                    ),
+                                    #br(), 
+                                    #br(),
+                                    #actionButton("guide", " Run guided tour", icon = icon("info-sign", lib = "glyphicon"))
+                                    ))
+             ),
+             div(
+                 id = "plots",
+                 div(
+                   id = "plots_sec1",
+                   fluidRow(
+                     column(9,
+                            shinycssloaders::withSpinner(plotlyOutput("fig.barTissue"), size = 1, type=1, color.background = "white")
+                     ),
+                     column(3,
+                            shinycssloaders::withSpinner(plotlyOutput("fig.pieType_Mut"), size = 0.5, type=1, color.background = "white")
+                     )
+                     #column(3,
+                            #shinycssloaders::withSpinner(plotlyOutput("fig.pieCancerSNP"), size = 0.5, type=1, color.background = "white")
+                     #),
+                     #column(3,
+                     #       #shinycssloaders::withSpinner(plotlyOutput("fig.pieVarClassif"), size = 0.5, type=1, color.background = "white")
+                     #)
+                   ),
+                 )
+               )
+    ),
+    # ==== Tab Variants ===============================================================
+    tabPanel(
+      'Variants',
+       fluidRow(
+           column(12, p("Complete CaRinDB with SNPs per Sampĺes. "))
+       ),
+      # Sidebar with a slider input for number of bins
+      sidebarLayout(
+        div(
+        id = "options_CaRinDB",
+          sidebarPanel(
+            radioButtons("show_unique", 
+                         "Show", 
+                         choices = list("Unique rows" = "unique" , "All rows" = "all"),  
+                         selected = c("unique"),
+                         inline = TRUE),
+            pickerInput(
+              inputId = "show_tissues",
+              label = "Select Tissues of CaRinDB:",
+              choices = tissues,
+              selected = tissues,
+              options = list(
+                `actions-box` = TRUE,
+                size = 10,
+                `selected-text-format` = "count > 5"),
+              multiple = TRUE
+            ),pickerInput(
+              inputId = "show_vars",
+              label = "Select columns in CaRinDB:", 
+              choices = names(CaRinDB),
+              selected = names(CaRinDB)[c(1:6)],
+              options = list(
+                `actions-box` = TRUE,
+                `selected-text-format` = "count > 5",
+                size = 10), 
+              multiple = TRUE
+            ),
+            verbatimTextOutput(outputId = "res"),
+            width = 3
+          )),
+        
+        mainPanel(
+          shinycssloaders::withSpinner(DT::dataTableOutput("tb_CaRinDB"), size = 0.5, type=1, color.background = "white"),
+         #  tabsetPanel(
+         #      id = 'tab',
+         #      tabPanel("CaRinDB",)
+         #  ),
+          width = 9
+        )
+      )
+    )
+    )
+)

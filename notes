@@ -1,0 +1,50 @@
+!- Processo de RIN não é paralelisável.
+
+Projeto 1 - Base de Informação e Listagem da Base de Mutações Missense
+- Mostrar:
+	* Buscar por PBD_id;
+	* Visualizar o PBD api via plus3d.app;
+	* Cosmic 3D https://cancer.sanger.ac.uk/cosmic3d/help
+
+Projeto 2 - 
+- Mostra: 
+	* Exibir mutações via RIN:  	
+	
+Projeto 3 - 
+	* Visualização da Rede do RIN 
+	* Instegração com dados do Aphafold (WideType)
+
+- Remover o "G" do ring
+
+- 
+
+https://sites.google.com/imd.ufrn.br/structuralbiome/
+
+https://docs.google.com/presentation/d/1A2pk3RE-v1shI1V_PRjTVPK8XHB1qKZ7NFhEzK2DIHA/present?slide=id.gc6f73a04f_0_0
+
+
+
+
+CancerRINs
+RINPDB
+
+3306 pbdb; PBD_id
+2576 uniques no CancerRINs/CaRinDB;
+
+26k
+
+41387
+
+
+2 90
+Score : pLDDT acima de >70
+
+
+https://ring.biocomputingup.it/submit
+
+plus3d.app
+
+Rede RIN - Estrutura de AminoAcidos
+
+
+Deleteria 
