@@ -62,7 +62,7 @@ server <- function(input, output, session) {
     plot_ly(data = CaRinDB_Tissue , x = ~Tissue, y = ~n, type = 'bar', labels = ~Tissue, 
             text = ~n, textposition="outside", sort = T, text_auto='.2s', textangle=0, textfont.size=8  
             ) %>%
-      layout(showlegend = T, yaxis = list(title = '#Samples by Cancer Type'),
+      layout(showlegend = F, yaxis = list(title = '#Samples by Cancer Type'),
              xaxis = list(title = "Cancer_Type", tickangle = -45),
              font  = list(size = 10))
   })
@@ -77,6 +77,153 @@ server <- function(input, output, session) {
              yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
              font  = list(size = 10))
   })
+  
+  #------------------------------------------
+  # Ndamage vs. Mutation number ok ---- 
+  output$fig.bar.NdamageTotMut <- renderPlotly({
+    plot_ly(data = count(CaRinDB[CaRinDB$Tissue %in%  input$select_tissues, ], NdamageCalc), x = ~NdamageCalc, y = ~n, type = 'bar', 
+            text = ~n, textposition="outside"
+    ) %>%
+      layout(showlegend = F, 
+             yaxis = list(title = '# Mutations'),
+             xaxis = list(title = '# N DamageCalc', tickangle = -45),
+             font  = list(size = 10)
+      )
+  })
+ 
+  # Inter_Res_tot vs. Mutation number ok ----
+  output$fig.barInterResTotMut <- renderPlotly({
+    plot_ly(data = count(CaRinDB[CaRinDB$Tissue %in%  input$select_tissues, ], Inter_Res_tot), x = ~Inter_Res_tot, y = ~n, type = 'bar', 
+            text = ~n, textposition="outside", sort = T, text_auto='.2s', textangle=0, textfont.size=8  
+    ) %>%
+      layout(showlegend = F, 
+             yaxis = list(title = '# Mutations'),
+             xaxis = list(title = '# Inter_Res_tot', tickangle = -45),
+             font  = list(size = 10)
+      )
+  })
+  
+  # - betweenness vs. Frequency ok ----
+  output$fig.Betweenness <- renderPlotly({
+    plot_ly(x = CaRinDB$betweennessWeighted_node[CaRinDB$Tissue %in%  input$select_tissues],  type = "histogram") %>%
+      layout(showlegend = F, 
+             #title = 'Betweenness',
+             yaxis = list(title = '# Mutations'),
+             xaxis = list(title = '# Betweenness Weighted'),
+             updatemenus = list(list(
+             y = 1.1,
+             active = 0,
+             buttons= list(
+               list(label = 'Linear',
+                    method = 'update',
+                    args = list(list(visible = c(T)), list(#xaxis = list(type = 'linear'),
+                                                           yaxis = list(type = 'linear')))),
+               list(label = 'Log',
+                    method = 'update', 
+                    args = list(list(visible = c(T)), list(yaxis = list(type = 'log')
+                                                           ))))))
+             )
+    
+  })
+  
+  # Degree (x) vs. Mutation number ok ----
+  output$fig.barDegMut <- renderPlotly({
+    plot_ly(data = count(CaRinDB[CaRinDB$Tissue %in%  input$select_tissues, ], Degree_RING), x = ~Degree_RING, y = ~n, type = 'bar', 
+            text = ~n, textposition="outside", sort = T, text_auto='.2s', textangle=0, textfont.size=8  
+    ) %>%
+      layout(showlegend = F, 
+             yaxis = list(title = "# Mutations"),
+             xaxis = list(title = "# Degree RING"),
+             updatemenus = list(list(
+               y = 1.1,
+               active = 0,
+               buttons= list(
+                 list(label = 'Linear',
+                      method = 'update',
+                      args = list(list(visible = c(T)), list(xaxis = list(type = 'linear'),
+                                                             yaxis = list(type = 'linear')))),
+                 list(label = 'Log',
+                      method = 'update', 
+                      args = list(list(visible = c(T)), list(xaxis = list(type = 'log'),
+                                                             yaxis = list(type = 'log')
+                      ))))))
+      )
+  })
+  
+  output$fig.Degree_RING <- renderPlotly({
+    plot_ly(data = CaRinDB[CaRinDB$Tissue %in%  input$select_tissues, ], x = ~Degree_RING, y = ~dbNSFP_gnomAD_exomes_AF, type = "scatter") %>%
+      layout(showlegend = F, 
+             yaxis = list(title = '# dbNSFP_gnomAD_exomes_AF'),
+             xaxis = list(title = '# Degree RING'),
+             updatemenus = list(list(
+               y = 1.1,
+               active = 0,
+               buttons= list(
+                 list(label = 'Linear',
+                      method = 'update',
+                      args = list(list(visible = c(T)), list(xaxis = list(type = 'linear'),
+                                                             yaxis = list(type = 'linear')
+                                                             ))),
+                 list(label = 'Log',
+                      method = 'update', 
+                      args = list(list(visible = c(T)), list(xaxis = list(type = 'log')#,
+                                                             #yaxis = list(type = 'log')
+                      ))))))
+      )
+  })
+  
+  # - coefclustering vs. Mutation number ----
+  output$fig.clusteringCoef <- renderPlotly({
+    plot_ly(x = CaRinDB$clusteringCoef_node[CaRinDB$Tissue %in%  input$select_tissues],  type = "histogram") %>%
+      layout(showlegend = F, 
+             yaxis = list(title = '# Mutations'),
+             xaxis = list(title = "# Clustering Coeficient")) 
+  })
+
+  
+  # ChangeType vs. Mutation number ----
+  output$fig.bar.ChangeTypeTotMut <- renderPlotly({
+    plot_ly(data = count(CaRinDB[CaRinDB$Tissue %in%  input$select_tissues, ], typechangeProt), x = ~typechangeProt, #list("Del", "Subst", "Translation\n Termination"), 
+            y = ~n, type = 'bar', 
+            text = ~n, textposition="outside"
+    ) %>%
+      layout(showlegend = F, 
+             yaxis = list(title = '# Mutations'),
+             xaxis = list(title = "# Change Type"), # , tickangle = -45
+             font  = list(size = 10)
+      )
+  })
+
+  # Deleteria5/10/20 vs. Mutation number ----
+  output$fig.bar.deleteriaTotMut <- renderPlotly({
+    plot_ly(data = count(CaRinDB[CaRinDB$Tissue %in%  input$select_tissues, ], Deleterious, Deleterious5, Deleterious10), x = list("Non Deleteria", "Deleteria", "Deleteria5",  "Deleteria10"),  y = ~n, type = 'bar', 
+            text = ~n, textposition="outside") %>%
+      layout(showlegend = F, 
+             yaxis = list(title = '# Mutations'),
+             xaxis = list(title = '# Deleteria'), # , tickangle = -45
+             font  = list(size = 10)
+      )
+  })
+  
+  # - b-factor vs. Mutation number ----
+  output$fig.bFactor <- renderPlotly({
+    plot_ly(x = CaRinDB$Bfactor_CA_RING[CaRinDB$Tissue %in%  input$select_tissues],  type = "histogram") %>%
+      layout(showlegend = F, 
+             yaxis = list(title = '# Mutations'),
+             xaxis = list(title = '# B-factor'),
+             updatemenus = list(list(
+               y = 1.1,
+               active = 0,
+               buttons= list(
+                 list(label = 'Linear',
+                      method = 'update',
+                      args = list(list(visible = c(T)), list(yaxis = list(type = 'linear')))),
+                 list(label = 'Log',
+                      method = 'update', 
+                      args = list(list(visible = c(T)), list(yaxis = list(type = 'log')
+                      ))))))
+             ) 
+ })
   
   
   # CaRinDB ----
@@ -96,5 +243,7 @@ server <- function(input, output, session) {
       escape=FALSE)
     
   })
-
+  
+  
+  
 }

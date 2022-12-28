@@ -27,15 +27,14 @@ ui <- fluidPage(
   ),
   navbarPage(
     windowTitle = "CaRinDB",
-    div(img(src="favicon.png", align="left", width="50px"), style="border: 0px; padding:0px; margin: 0px 0 0 0px;" ), 
+    div(img(src="favicon.png", align="left", width="40px"), style="border: 0px; padding: 0px; margin: -10px 0 0 10px;" ), 
     id = "nav",
     position = "fixed-top",
     br(br()),
     # ==== Tab CaRinDB ===============================================================
     tabPanel('CaRinDB',
-             fluidRow(
-               column(12, wellPanel(p("
-        The CaRinDB is a new database ."), 
+            fluidRow(
+            wellPanel(p("CaRinDB: An integrated database of Cancer Mutations and Residue Interaction Networks."), 
                                     #br(),
                                     #icon("cog", lib = "glyphicon"), 
                                     #em( "Click on legends of plots to activate or deactivate labels."), br(),
@@ -47,34 +46,92 @@ ui <- fluidPage(
                                     #br(), 
                                     #br(),
                                     #actionButton("guide", " Run guided tour", icon = icon("info-sign", lib = "glyphicon"))
-                                    ))
-             ),
+            ),
              div(
                  id = "plots",
                  div(
                    id = "plots_sec1",
-                   fluidRow(
+                   #fluidRow(
+                     # Line 0 ----
+                     #sidebarPanel(
                      column(9,
                             shinycssloaders::withSpinner(plotlyOutput("fig.barTissue"), size = 1, type=1, color.background = "white")
                      ),
                      column(3,
                             shinycssloaders::withSpinner(plotlyOutput("fig.pieType_Mut"), size = 0.5, type=1, color.background = "white")
-                     )
-                     #column(3,
-                            #shinycssloaders::withSpinner(plotlyOutput("fig.pieCancerSNP"), size = 0.5, type=1, color.background = "white")
+                     ),
+                     # Line 1 ----
+                    column(12,
+                      wellPanel(
+                      column(3,  
+                      pickerInput(
+                         inputId = "select_tissues",
+                         label = "Select Tissues",
+                         choices = tissues,
+                         selected = tissues,
+                         options = list(
+                           `actions-box` = TRUE,
+                           size = 8,
+                           `selected-text-format` = "count > 5"),
+                         multiple = TRUE
+                       )
+                      ),
+                      br(br())))
+                     ),
+                     column(6,
+                            shinycssloaders::withSpinner(plotlyOutput("fig.bar.NdamageTotMut"), size = 0.5, type=1, color.background = "white")
+                     ),
+                     column(6,
+                            shinycssloaders::withSpinner(plotlyOutput("fig.barInterResTotMut"), size = 0.5, type=1, color.background = "white")
+                     ),
+                     # Line 2 ----
+                     column(6,
+                            shinycssloaders::withSpinner(plotlyOutput("fig.Betweenness"), size = 0.5, type=1, color.background = "white")
+                     ),
+                     # Line 3 ----
+                     column(6,
+                            shinycssloaders::withSpinner(plotlyOutput("fig.barDegMut"), size = 0.5, type=1, color.background = "white")
+                            
+                     ),
+                     column(6,
+                            shinycssloaders::withSpinner(plotlyOutput("fig.bar.ChangeTypeTotMut"), size = 0.5, type=1, color.background = "white")
+                            
+                     ),
+                     # Line 4 ---- 
+                     column(6,
+                            shinycssloaders::withSpinner(plotlyOutput("fig.clusteringCoef"), size = 0.5, type=1, color.background = "white")
+                            
+                     ),
+                     #column(6,
+                            #shinycssloaders::withSpinner(plotlyOutput("fig.typechangeProt"), size = 0.5, type=1, color.background = "white")
+                            
                      #),
-                     #column(3,
-                     #       #shinycssloaders::withSpinner(plotlyOutput("fig.pieVarClassif"), size = 0.5, type=1, color.background = "white")
-                     #)
-                   ),
-                 )
-               )
-    ),
+                     # Line 5 ---- 
+                     column(6,
+                            shinycssloaders::withSpinner(plotlyOutput("fig.bar.deleteriaTotMut"), size = 0.5, type=1, color.background = "white")
+                            
+                     ),
+                     column(6,
+                            shinycssloaders::withSpinner(plotlyOutput("fig.bFactor"), size = 0.5, type=1, color.background = "white")
+                     ),
+                     # Line 6 ---- 
+                     #
+                     column(12,
+                            shinycssloaders::withSpinner(plotlyOutput("fig.Degree_RING"), size = 0.5, type=1, color.background = "white")
+                     )
+                )
+            )
+        ),
     # ==== Tab Variants ===============================================================
     tabPanel(
       'Variants',
        fluidRow(
-           column(12, p("Complete CaRinDB with SNPs per Sampĺes. "))
+         
+           column(12, 
+                  wellPanel(
+                  p("Complete CaRinDB with SNPs per Sampĺes. ")
+                  )
+          )
        ),
       # Sidebar with a slider input for number of bins
       sidebarLayout(
@@ -122,4 +179,5 @@ ui <- fluidPage(
       )
     )
     )
-)
+)  
+
