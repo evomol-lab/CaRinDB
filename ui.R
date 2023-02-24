@@ -34,16 +34,10 @@ ui <- fluidPage(
     # ==== Tab CaRinDB ===============================================================
     tabPanel('CaRinDB',
             fluidRow(
-            wellPanel(p("CaRinDB: An integrated database of Cancer Mutations and Residue Interaction Networks."), 
+            wellPanel(p("CaRinDB: An integrated database of Cancer Mutations and Residue Interaction Networks.")
                                     #br(),
                                     #icon("cog", lib = "glyphicon"), 
                                     #em( "Click on legends of plots to activate or deactivate labels."), br(),
-                                    icon("cog", lib = "glyphicon"),                                           
-                                    em( "Use ",
-                                    a("regex", href="misc/cheatsheets_regex.pdf", target="_blank"), 
-                                        " to search in datatables."
-                                    ),
-                                    #br(), 
                                     #br(),
                                     #actionButton("guide", " Run guided tour", icon = icon("info-sign", lib = "glyphicon"))
             ),
@@ -129,7 +123,13 @@ ui <- fluidPage(
          
            column(12, 
                   wellPanel(
-                  p("Complete CaRinDB with SNPs per Sampĺes. ")
+                  p("Complete CaRinDB with SNPs per Sampĺes. "),
+                  icon("cog", lib = "glyphicon"),                                           
+                  em( "Use ",
+                      a("regex", href="misc/cheatsheets_regex.pdf", target="_blank"), 
+                      " to search in datatables."
+                  ),
+                  br()
                   )
           )
        ),
