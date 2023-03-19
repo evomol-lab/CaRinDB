@@ -1,6 +1,5 @@
 # This is a Shiny web application. You can run the application by clicking
 # the 'Run App' button above.
-
 # ==== Loading library ===============================================================
 #if(!require(uuid)){ install.packages("uuid") }
 #if(!require(curl)){ install.packages("curl") }
@@ -22,7 +21,7 @@ if(!require(shiny, quietly=TRUE, warn.conflicts=FALSE)){ install.packages('shiny
 if(!require(shinyWidgets, quietly=TRUE, warn.conflicts=FALSE)){ install.packages('shinyWidgets', quiet=TRUE) }
 if(!require(htmltools, quietly=TRUE, warn.conflicts=FALSE)){ install.packages('htmltools', quiet=TRUE) }
 if(!require(shinycssloaders, quietly=TRUE, warn.conflicts=FALSE)){ install.packages('shinycssloaders', quiet=TRUE) }
-#if(!require(shinythemes, quietly=TRUE, warn.conflicts=FALSE)){ install.packages('shinythemes', quiet=TRUE) }
+if(!require(shinythemes, quietly=TRUE, warn.conflicts=FALSE)){ install.packages('shinythemes', quiet=TRUE) }
 #if(!require(shinyjs, quietly=TRUE, warn.conflicts=FALSE)){ install.packages('shinyjs', quiet=TRUE) }
 if(!require(ggplot2, quietly=TRUE, warn.conflicts=FALSE)){ install.packages('ggplot2', quiet = FALSE) }
 if(!require(DT, quietly=TRUE, warn.conflicts=FALSE)){ install.packages('DT', quiet=TRUE) }
@@ -34,7 +33,7 @@ if(!require(plotly, quietly=TRUE, warn.conflicts=FALSE)){ install.packages('plot
 # https://daattali.com/shiny/shinycssloaders-demo/
 # https://github.com/daattali/shinycssloaders#usage
 # https://projects.lukehaas.me/css-loaders/
-if(!require(cicerone, quietly=TRUE, warn.conflicts=FALSE)){ install.packages("cicerone", quiet=TRUE) }
+#if(!require(cicerone, quietly=TRUE, warn.conflicts=FALSE)){ install.packages("cicerone", quiet=TRUE) }
 
 # if(!require(magrittr)){ install.packages('magrittr') }
 # if(!require(generics)){ install.packages('generics') }
@@ -119,18 +118,33 @@ link_proteins <-  memoize2(function(val) {
 
 # ==== Global variables ===============================================================
 
-f <-  "data/CaRinDB.csv"
-CaRinDB <- vroom(f, show_col_types = FALSE) 
+# ==== Loading CaRinDB ================================================================
+CaRinDB <- vroom::vroom("data/CaRinDB.csv", 
+                        show_col_types = FALSE) 
 
 CaRinDB <- CaRinDB %>%
   dplyr::mutate(SNP_search = link_snps(SNP_ID_COMMON),
                 Gene_search = link_genecards(Gene_EFF),
                 RefSeq_search = link_proteins(RefSeq_EFF))
-  
+
 CaRinDB_cols <- names(CaRinDB)
 
 CaRinDB <- CaRinDB %>%
-  dplyr::select(c("Tissue", "Gene_EFF", "Gene_search", "SNP_ID_COMMON", "SNP_search", "RefSeq_EFF", "RefSeq_search", all_of(CaRinDB_cols)))
+  dplyr::select(c("Tissue", "Gene_EFF", "Gene_search", "SNP_ID_COMMON", "SNP_search", "RefSeq_EFF", "RefSeq_search", dplyr::all_of(CaRinDB_cols)))
 
 tissues <- unique(CaRinDB$Tissue)
+
+CaRinAF <- vroom::vroom("data/CaRinAF.csv", 
+                        #n_max = 50,
+                        show_col_types = FALSE) 
+CaRinAF_cols <- names(CaRinAF)
+CaRinAF <- CaRinAF %>%
+  dplyr::mutate(SNP_search = link_snps(SNP_ID_COMMON),
+                Gene_search = link_genecards(Gene_EFF),
+                RefSeq_search = link_proteins(RefSeq_EFF))
+
+CaRinAF <- CaRinAF %>%
+  dplyr::select(c("Tissue", "Gene_EFF", "Gene_search", "SNP_ID_COMMON", "SNP_search", "RefSeq_EFF", "RefSeq_search", dplyr::all_of(CaRinAF_cols)))
+
+tissues_AF <- unique(CaRinAF$Tissue)
 

@@ -1,7 +1,9 @@
-setwd("~/bio/CaRinDB/")
+setwd("~/CaRinDB/")
 
 # Load libraries
 library(shiny)
 
 # Run on local RStudio
-runApp(appDir = "~/bio/CaRinDB/")
+runApp(appDir = "~/CaRinDB/")
+
+

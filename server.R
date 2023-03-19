@@ -61,7 +61,7 @@ server <- function(input, output, session) {
   output$fig.barTissue <- renderPlotly({
     plot_ly(data = CaRinDB_Tissue , x = ~Tissue, y = ~n, type = 'bar', labels = ~Tissue, 
             text = ~n, textposition="outside", sort = T, text_auto='.2s', textangle=0, textfont.size=8  
-            ) %>%
+    ) %>%
       layout(showlegend = F, yaxis = list(title = '#Samples by Cancer Type'),
              xaxis = list(title = "Cancer_Type", tickangle = -45),
              font  = list(size = 10))
@@ -90,7 +90,7 @@ server <- function(input, output, session) {
              font  = list(size = 10)
       )
   })
- 
+  
   # Inter_Res_tot vs. Mutation number ok ----
   output$fig.barInterResTotMut <- renderPlotly({
     plot_ly(data = count(CaRinDB[CaRinDB$Tissue %in%  input$select_tissues, ], Inter_Res_tot), x = ~Inter_Res_tot, y = ~n, type = 'bar', 
@@ -111,18 +111,18 @@ server <- function(input, output, session) {
              yaxis = list(title = '# Mutations'),
              xaxis = list(title = '# Betweenness Weighted'),
              updatemenus = list(list(
-             y = 1.1,
-             active = 0,
-             buttons= list(
-               list(label = 'Linear',
-                    method = 'update',
-                    args = list(list(visible = c(T)), list(#xaxis = list(type = 'linear'),
-                                                           yaxis = list(type = 'linear')))),
-               list(label = 'Log',
-                    method = 'update', 
-                    args = list(list(visible = c(T)), list(yaxis = list(type = 'log')
-                                                           ))))))
-             )
+               y = 1.1,
+               active = 0,
+               buttons= list(
+                 list(label = 'Linear',
+                      method = 'update',
+                      args = list(list(visible = c(T)), list(#xaxis = list(type = 'linear'),
+                        yaxis = list(type = 'linear')))),
+                 list(label = 'Log',
+                      method = 'update', 
+                      args = list(list(visible = c(T)), list(yaxis = list(type = 'log')
+                      ))))))
+      )
     
   })
   
@@ -163,7 +163,7 @@ server <- function(input, output, session) {
                       method = 'update',
                       args = list(list(visible = c(T)), list(xaxis = list(type = 'linear'),
                                                              yaxis = list(type = 'linear')
-                                                             ))),
+                      ))),
                  list(label = 'Log',
                       method = 'update', 
                       args = list(list(visible = c(T)), list(xaxis = list(type = 'log')#,
@@ -179,7 +179,7 @@ server <- function(input, output, session) {
              yaxis = list(title = '# Mutations'),
              xaxis = list(title = "# Clustering Coeficient")) 
   })
-
+  
   
   # ChangeType vs. Mutation number ----
   output$fig.bar.ChangeTypeTotMut <- renderPlotly({
@@ -193,7 +193,7 @@ server <- function(input, output, session) {
              font  = list(size = 10)
       )
   })
-
+  
   # Deleteria5/10/20 vs. Mutation number ----
   output$fig.bar.deleteriaTotMut <- renderPlotly({
     plot_ly(data = count(CaRinDB[CaRinDB$Tissue %in%  input$select_tissues, ], Deleterious, Deleterious5, Deleterious10), x = list("Non Deleteria", "Deleteria", "Deleteria5",  "Deleteria10"),  y = ~n, type = 'bar', 
@@ -222,13 +222,13 @@ server <- function(input, output, session) {
                       method = 'update', 
                       args = list(list(visible = c(T)), list(yaxis = list(type = 'log')
                       ))))))
-             ) 
- })
+      ) 
+  })
   
   
   # CaRinDB ----
   output$tb_CaRinDB <- DT::renderDataTable({
-    #w$show()
+    #w$show() 
     DT::datatable(
       if(input$show_unique == "unique"){ 
         CaRinDB[ CaRinDB$Tissue %in% input$show_tissues & !duplicated(CaRinDB[CaRinDB$Tissue %in% input$show_tissues, input$show_vars]) , input$show_vars, drop = FALSE]
@@ -241,9 +241,28 @@ server <- function(input, output, session) {
       extensions = c('Buttons', "ColReorder"),
       options = list.options,  
       escape=FALSE)
-    
-  })
+  },
+  server = TRUE
+  )
   
+  # CaRinDB/AlphaFold ----
+  output$tb_CaRinAF <- DT::renderDataTable({
+    #w$show()
+    DT::datatable(
+      if(input$show_unique_AF == "unique"){ 
+        CaRinAF[ CaRinAF$Tissue %in% input$show_tissues_AF & !duplicated(CaRinAF[CaRinAF$Tissue %in% input$show_tissues_AF, input$show_vars_AF]) , input$show_vars_AF, drop = FALSE]
+      } else{
+        CaRinAF[CaRinAF$Tissue %in% input$show_tissues_AF , input$show_vars_AF, drop = FALSE]
+      } ,
+      class = 'cell-border stripe',
+      rownames = FALSE,
+      filter = 'top',
+      extensions = c('Buttons', "ColReorder"),
+      options = list.options,  
+      escape=FALSE)
+  },
+  server = TRUE
+  )
   
   
 }
