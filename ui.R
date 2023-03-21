@@ -1,4 +1,5 @@
 #if(!require(shinythemes, quietly=TRUE, warn.conflicts=FALSE)){ install.packages('shinythemes', quiet=TRUE) }
+not_sel <- "Not Selected"
 # ==== ui.R ===============================================================
 ui <- fluidPage(theme = shinytheme("united"),
   tags$head(
@@ -33,9 +34,9 @@ ui <- fluidPage(theme = shinytheme("united"),
     position = "fixed-top",
     br(br()),
     # ==== Tab CaRinDB ===============================================================
-    tabPanel('CaRinDB',
+    tabPanel(icon("home", lib = "glyphicon"), # Home
             fluidRow(
-            wellPanel(p("CaRinDB: An integrated database of Cancer Mutations and Residue Interaction Networks.")
+            wellPanel(p("CaRinDB is an integrated database of Cancer Mutations, Residue Interaction Networks and AlphaFold Protein Structure Database.")
                                     #br(),
                                     #icon("cog", lib = "glyphicon"), 
                                     #em( "Click on legends of plots to activate or deactivate labels."), br(),
@@ -56,105 +57,78 @@ ui <- fluidPage(theme = shinytheme("united"),
                             shinycssloaders::withSpinner(plotlyOutput("fig.pieType_Mut"), size = 0.5, type=1, color.background = "white")
                      ),
                      # Row 2 ----
+                   column(12,
+                      wellPanel(
+                      column(12,  
+                      p("CaRinDB integrated to AlphaFold Protein Structure Database:")
+                      ),
+                      br(br())
+                      )
+                    ),
+                   column(9,
+                          shinycssloaders::withSpinner(plotlyOutput("fig.AF.barTissue"), size = 1, type=1, color.background = "white")
+                   ),
+                   column(3,
+                          #shinycssloaders::withSpinner(plotlyOutput("fig.pieType_Mut"), size = 0.5, type=1, color.background = "white")
+                   ),
                     column(12,
                       wellPanel(
                       column(3,  
-                      pickerInput(
-                         inputId = "select_tissues",
-                         label = "Select Tissues",
-                         choices = tissues,
-                         selected = tissues,
-                         options = list(
-                           `actions-box` = TRUE,
-                           size = 8,
-                           `selected-text-format` = "count > 5"),
-                         multiple = TRUE
-                       )
                       ),
                       br(br())))
-                     ),
-                     # Row 3 ----
-                     column(6,
-                            shinycssloaders::withSpinner(plotlyOutput("fig.bar.NdamageTotMut"), size = 0.5, type=1, color.background = "white")
-                     ),
-                     column(6,
-                            shinycssloaders::withSpinner(plotlyOutput("fig.barInterResTotMut"), size = 0.5, type=1, color.background = "white")
-                     ),
-                     # Row 4 ----
-                     column(6,
-                            shinycssloaders::withSpinner(plotlyOutput("fig.Betweenness"), size = 0.5, type=1, color.background = "white")
-                     ),
-                     # Row 5 ----                 
-                     #column(6,
-                     #        shinycssloaders::withSpinner(plotlyOutput("fig.barDegMut"), size = 0.5, type=1, color.background = "white")
-                     #),
-
-                     #column(6,
-                     #        shinycssloaders::withSpinner(plotlyOutput("fig.bar.ChangeTypeTotMut"), size = 0.5, type=1, color.background = "white")
-                     #),
-                     # Line 4 ---- 
-                     #column(6,
-                     #        shinycssloaders::withSpinner(plotlyOutput("fig.clusteringCoef"), size = 0.5, type=1, color.background = "white")
-                     #),
-                     #column(6,
-                            #shinycssloaders::withSpinner(plotlyOutput("fig.typechangeProt"), size = 0.5, type=1, color.background = "white")
-                            
-                     #),
-                     # Line 5 ---- 
-                     column(6,
-                            shinycssloaders::withSpinner(plotlyOutput("fig.bar.deleteriaTotMut"), size = 0.5, type=1, color.background = "white")
-                            
-                     ),
-                     column(6,
-                            shinycssloaders::withSpinner(plotlyOutput("fig.bFactor"), size = 0.5, type=1, color.background = "white")
-                     )#,
-                     # Line 6 ---- 
-                     #
-                     #column(12,
-                     #        shinycssloaders::withSpinner(plotlyOutput("fig.Degree_RING"), size = 0.5, type=1, color.background = "white")
-                     #)
+                     )
                 )
             )
         ),
     # ==== Tab CaRinDB Variants ===============================================================
     tabPanel(
-      'CaRinDB Variants',
+      " CaRinDB", 
+      icon = icon("list-alt", lib = "glyphicon"),
        fluidRow(
            column(12, 
                   wellPanel(
-                  p("Complete CaRinDB with SNPs per Sampĺes.  "),
-                  icon("cog", lib = "glyphicon"),                                           
-                  em( "Use ",
-                      a("regex", href="misc/cheatsheets_regex.pdf", target="_blank"), 
-                      " to search in datatables."
-                  ),
-                  br()
+                  p("Complete CaRinDB Variants with SNPs per Sampĺes.  ")
                   )
           )
        ),
       # Sidebar with a slider input for number of bins
       sidebarLayout(
-        div(
-        id = "options_CaRinDB",
-          sidebarPanel(
+        sidebarPanel(
+          pickerInput(
+            inputId = "select_tissues",
+            label = "Select Tissues",
+            choices = tissues,
+            selected = tissues,
+            options = list(
+              `actions-box` = TRUE,
+              size = 8,
+              `selected-text-format` = "count > 5"),
+            multiple = TRUE
+          ),
+        conditionalPanel(
+          'input.tab_carindb === "Summary"',
+          # ==== BEGIN SubTab CaRinDB plots ===============================================================
+          #p("Aqui"),
+          # ==== END SubTab CaRinDB plots ===============================================================
+        ),
+        conditionalPanel(
+          'input.tab_carindb === "Custom plot"',
+          selectInput("num_var_1_DB", "Numerical Variable 1", choices = c(not_sel)),
+          selectInput("num_var_2_DB", "Numerical Variable 2", choices = c(not_sel)),
+          selectInput("fact_var_DB", "Factor Variable", choices = c(not_sel)),
+          br(),
+          actionButton("run_button_DB", "Run Analysis", icon = icon("play"))
+        ),
+        conditionalPanel(         
+          'input.tab_carindb === "Dataset"',
             radioButtons("show_unique", 
                          "Show", 
-                         choices = list("Unique rows" = "unique" , "All rows" = "all"),  
+                         choices = list("Unique samples" = "unique" , "All samples" = "all"),  
                          selected = c("all"),
                          inline = TRUE),
             pickerInput(
-              inputId = "show_tissues",
-              label = "Select Tissues of CaRinDB:",
-              choices = tissues,
-              selected = tissues,
-              options = list(
-                `actions-box` = TRUE,
-                size = 10,
-                `selected-text-format` = "count > 5"),
-              multiple = TRUE
-            ),pickerInput(
               inputId = "show_vars",
-              label = "Select columns in CaRinDB:", 
+              label = "Select columns in CaRinDB", 
               choices = names(CaRinDB),
               selected = names(CaRinDB)[c(1:6)],
               options = list(
@@ -163,58 +137,110 @@ ui <- fluidPage(theme = shinytheme("united"),
                 size = 10), 
               multiple = TRUE
             ),
-            verbatimTextOutput(outputId = "res"),
-            width = 3
-          )),
+          icon("cog", lib = "glyphicon"),                                           
+          em( "Use ",
+              a("regex", href="misc/cheatsheets_regex.pdf", target="_blank"), 
+              " to search in datatables."
+          ),
+          br(),
+            verbatimTextOutput(outputId = "res")             
+        ),
+        width = 3 
+        ),
         mainPanel(
-          shinycssloaders::withSpinner(DT::dataTableOutput("tb_CaRinDB"), size = 0.5, type=1, color.background = "white"),
-         #  tabsetPanel(
-         #      id = 'tab',
-         #      tabPanel("CaRinDB",)
-         #  ),
-          width = 9
-        )
+          tabsetPanel(
+            id = 'tab_carindb',
+            tabPanel("Summary",
+                     p("Summary description of selected tissues."),
+                     column(12,
+                            shinycssloaders::withSpinner(htmlOutput("summary_CaRinDB"),
+                                                         size = 0.5, type=1, 
+                                                         color.background = "white")
+                     )
+            ),
+            tabPanel("Plots",
+                     p(HTML(paste0("Plots of selected tissues: ", textOutput("res_tissues", inline = T), "."))),
+                     # Row 1 ----                     
+                     column(6,
+                            shinycssloaders::withSpinner(plotlyOutput("fig.bar.NdamageTotMut"), size = 0.5, type=1, color.background = "white")
+                     ),
+                     column(6,
+                            shinycssloaders::withSpinner(plotlyOutput("fig.barInterResTotMut"), size = 0.5, type=1, color.background = "white")
+                     ),
+                     # Row 2 ----
+                     column(4,
+                            shinycssloaders::withSpinner(plotlyOutput("fig.Betweenness"), size = 0.5, type=1, color.background = "white")
+                     ),
+                     column(4,
+                            shinycssloaders::withSpinner(plotlyOutput("fig.bFactor"), size = 0.5, type=1, color.background = "white")
+                     ),
+                     column(4,
+                            shinycssloaders::withSpinner(plotlyOutput("fig.bar.deleteriaTotMut"), size = 0.5, type=1, color.background = "white")
+                     ),
+                     column(12,
+                              br(br()))
+                ),
+            tabPanel(
+              title = "Custom plot",
+              plotOutput("plot_DB")
+            ),
+            tabPanel("Dataset", 
+                     shinycssloaders::withSpinner(DT::dataTableOutput("tb_CaRinDB"), size = 0.5, type=1, color.background = "white")
+                     )
+        ),
+        width = 9
+      )
+    )
+  ),
+  
+  # ==== Tab CaRinDB::AlphaFold Variants ===============================================================
+  tabPanel(
+    'CaRinDB::AlphaFold',
+    icon = icon("list-alt", lib = "glyphicon"),
+    fluidRow(
+      column(12,
+             wellPanel(
+               p("Complete CaRinDB Variants integrated to AlphaFold Protein Structure Database.")
+             )
       )
     ),
-    # ==== Tab CaRinDB/AlphaFold Variants ===============================================================
-      tabPanel(
-        'CaRinDB/AlphaFold Variants',
-        fluidRow(
-          column(12,
-                 wellPanel(
-                   p("Complete CaRinDB/AlphaFold with SNPs per Sampĺes. "),
-                   icon("cog", lib = "glyphicon"),
-                   em( "Use ",
-                       a("regex", href="misc/cheatsheets_regex.pdf", target="_blank"),
-                       " to search in datatables."
-                   ),
-                   br()
-                 )
-          )
-      ),
-      # Sidebar - CaRinAF
+    # ===============================================================    
+#       # Sidebar - CaRinAF
       sidebarLayout(
-        div(
-          id = "options_CaRinAF",
-          sidebarPanel(
+        sidebarPanel(
+          pickerInput(
+            inputId = "select_tissues_AF",
+            label = "Select Tissues of CaRinDB::AlphaFold",
+            choices = tissues_AF,
+            selected = tissues_AF,
+            options = list(
+              `actions-box` = TRUE,
+              size = 10,
+              `selected-text-format` = "count > 5"),
+            multiple = TRUE
+          ),
+          conditionalPanel(
+            'input.tab_carindbAF === "Summary"',
+            #p("Summary sidebar.")
+          ),
+          conditionalPanel(
+            'input.tab_carindbAF === "Custom plot"',
+            selectInput("num_var_1_AF", "Numerical Variable 1", choices = c(not_sel)),
+            selectInput("num_var_2_AF", "Numerical Variable 2", choices = c(not_sel)),
+            selectInput("fact_var_AF", "Factor Variable", choices = c(not_sel)),
+            br(),
+            actionButton("run_button_AF", "Run Analysis", icon = icon("play"))
+          ),
+          conditionalPanel(
+          'input.tab_carindbAF === "Dataset"',
             radioButtons("show_unique_AF",
                          "Show",
                          choices = list("Unique rows" = "unique" , "All rows" = "all"),
                          selected = c("all"),
                          inline = TRUE),
             pickerInput(
-              inputId = "show_tissues_AF",
-              label = "Select Tissues of CaRinDB/AlphaFold:",
-              choices = tissues_AF,
-              selected = tissues_AF,
-              options = list(
-                `actions-box` = TRUE,
-                size = 10,
-                `selected-text-format` = "count > 5"),
-              multiple = TRUE
-            ),pickerInput(
               inputId = "show_vars_AF",
-              label = "Select columns in CaRinDB/AlphaFold:",
+              label = "Select columns in CaRinDB::AlphaFold",
               choices = names(CaRinAF),
               selected = names(CaRinAF)[c(1:6)],
               options = list(
@@ -223,18 +249,62 @@ ui <- fluidPage(theme = shinytheme("united"),
                 size = 10),
               multiple = TRUE
             ),
-            verbatimTextOutput(outputId = "res_AF"),
-            width = 3
-          )),
+            icon("cog", lib = "glyphicon"),
+            em( "Use ",
+                a("regex", href="misc/cheatsheets_regex.pdf", target="_blank"),
+                " to search in datatables."
+            ),
+            br(),
+            verbatimTextOutput(outputId = "res_AF")
+          ),
+        width = 3
+          ),
         mainPanel(
-          shinycssloaders::withSpinner(DT::dataTableOutput("tb_CaRinAF"), size = 0.5, type=1, color.background = "white"),
-          #  tabsetPanel(
-          #      id = 'tab',
-          #      tabPanel("CaRinDB",)
-          #  ),
+          tabsetPanel(
+            id = 'tab_carindbAF',
+            tabPanel("Summary",
+                     # Row 3 ----                     
+                     p("Summary description of selected tissues."),
+                     column(12,
+                            shinycssloaders::withSpinner(htmlOutput("summary_CaRinAF"),
+                                                         size = 0.5, type=1, 
+                                                         color.background = "white")
+                     )
+            ),
+            tabPanel("Plots",
+                     p(HTML(paste0("Plots of selected tissues: ", textOutput("res_tissues_AF", inline = T), "."))),
+                     # Row 1 ----
+                     column(6,
+                            shinycssloaders::withSpinner(plotlyOutput("fig.AF.bar.NdamageTotMut"), size = 0.5, type=1, color.background = "white")
+                     ),
+                     column(6,
+                            shinycssloaders::withSpinner(plotlyOutput("fig.AF.bar.InterResTotMut"), size = 0.5, type=1, color.background = "white")
+                     ),
+                     # Row 2 ----
+                     column(4,
+                            shinycssloaders::withSpinner(plotlyOutput("fig.AF.Betweenness"), size = 0.5, type=1, color.background = "white")
+                     ),
+                     column(4,
+                            shinycssloaders::withSpinner(plotlyOutput("fig.AF.pLDDT"), size = 0.5, type=1, color.background = "white")
+                     ),
+                     column(4,
+                            shinycssloaders::withSpinner(plotlyOutput("fig.AF.bar.deleteriaTotMut"), size = 0.5, type=1, color.background = "white")
+                            
+                     ),
+                     column(12,
+                            br(br()))
+            ),
+            tabPanel(
+              title = "Custom plot",
+              plotOutput("plot_AF")
+            ),
+            tabPanel("Dataset",
+                     shinycssloaders::withSpinner(DT::dataTableOutput("tb_CaRinAF"), size = 0.5, type=1, color.background = "white")
+            )
+          ),
           width = 9
         )
-      ) # --
+      )
     )
   )
 )

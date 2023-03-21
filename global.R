@@ -29,6 +29,12 @@ if(!require(dplyr, quietly=TRUE, warn.conflicts=FALSE)){ install.packages('dplyr
 if(!require(tidyr, quietly=TRUE, warn.conflicts=FALSE)){ install.packages('tidyr', quiet=TRUE) }
 if(!require(vroom, quietly=TRUE, warn.conflicts=FALSE)){ install.packages('vroom', quiet=TRUE) }
 if(!require(plotly, quietly=TRUE, warn.conflicts=FALSE)){ install.packages('plotly', quiet=TRUE) }
+if(!require(data.table, quietly=TRUE, warn.conflicts=FALSE)){ install.packages('data.table', quiet=TRUE) }
+#if(!require(Rcpp, quietly=TRUE, warn.conflicts=FALSE)){ install.packages('Rcpp', quiet=TRUE) }
+#if(!require(magick, quietly=TRUE, warn.conflicts=FALSE)){ install.packages('magick', quiet=TRUE) }
+#if(!require(summarytools, quietly=TRUE, warn.conflicts=FALSE)){ install.packages('summarytools', dependencies = T, quiet=TRUE) }
+#if(!require(skimr, quietly=TRUE, warn.conflicts=FALSE)){ devtools::install_github("ropensci/skimr") }
+
 
 # https://daattali.com/shiny/shinycssloaders-demo/
 # https://github.com/daattali/shinycssloaders#usage
@@ -148,3 +154,12 @@ CaRinAF <- CaRinAF %>%
 
 tissues_AF <- unique(CaRinAF$Tissue)
 
+
+# summarytools::dfSummary(summarytools::dfSummary(CaRinDB, style="grid", method = "render"),
+#                    #varnumbers   = FALSE, 
+#                    #valid.col    = FALSE, 
+#                    omit.headings = TRUE,
+#                    bootstrap.css = FALSE,
+#                    escape.pipe = TRUE,
+#                    file = "./www/CaRinDB.html"
+# )
