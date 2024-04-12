@@ -5,7 +5,7 @@ server <- function(input, output, session) {
   storeWarn<- getOption("warn")
   options(warn = -1) 
   
-  # B - Buttons
+  # B - Buttons Bfrtip
   # l - Length changing input control
   # f - Filtering input
   # r - pRocessing display element
@@ -14,14 +14,14 @@ server <- function(input, output, session) {
   # p - Pagination control
   # General options for all tables ----
   list.options <- list(
-    pageLength = 10,
+    #pageLength = 10,
     lengthMenu =  list(c(10, 25, 50, 100, -1), 
-                       c('10', '25', '50','100', 'All')),
+                       c('10', '25', '50','100', 'all')),
     paging = T,
     search = list(regex = TRUE),
     searchHighlight = TRUE,
     colReorder = TRUE,
-    orientation ='landscape',
+    orientation ='landscape', # <'col-md-2''dwnld'>
     dom = "<'row'<'col-md-3'l><'col-md-6'B><'col-md-3'f>><'row'<'col-md-12't>><'row'<'col-md-3'i><'col-md-1'><'col-md-8'p>>",
     #dom = 'lBfrtip',
     buttons =
@@ -38,16 +38,36 @@ server <- function(input, output, session) {
              exportOptions = list(
                modifier = list(page = "current")
              )
-        ),
-        list(extend = "csv", 
-             text = '<span class="glyphicon glyphicon-download-alt"></span> All Pages (csv)', 
-             filename = "CaRinDB_page",
-             exportOptions = list(
-               modifier = list(page = "all")
-             )
         )
+        #,
+        #list(extend = "csv", 
+        #     text = '<span class="glyphicon glyphicon-download-alt"></span> All Pages+ (csv)', 
+        #     filename = "CaRinDB_all",
+        #     exportOptions = list(
+        #       modifier = list(page = 'all')
+        #     )
+        #)
       )
   )
+  
+  output$downloadDB <- downloadHandler(
+    filename = function() {
+      paste("CaRinDB-", Sys.Date(), ".csv", sep="")
+    },
+    content = function(file) {
+      write.csv(CaRinDB, file)
+    }
+  )
+  
+  output$downloadAF <- downloadHandler(
+    filename = function() {
+      paste("CaRinAlphaFold-", Sys.Date(), ".csv", sep="")
+    },
+    content = function(file) {
+      write.csv(CaRinAF, file)
+    }
+  )
+  
   
   CaRinDB_Tissue <- count(CaRinDB, Tissue) %>%
     arrange(desc(n))
@@ -264,7 +284,7 @@ server <- function(input, output, session) {
              font  = list(size = 10),
              title = "CaRinDB::AlphaFold with 33 tissues")
   })
-  
+
   #------------------------------------------
   # Ndamage vs. Mutation number OK ---- 
   output$fig.AF.bar.NdamageTotMut <- renderPlotly({
@@ -335,7 +355,7 @@ server <- function(input, output, session) {
   
   # Deleteria5/10/20 vs. Mutation number OK ----
   output$fig.AF.bar.deleteriaTotMut <- renderPlotly({
-    plot_ly(data = count(CaRinAF[CaRinAF$Tissue %in%  input$select_tissues_AF, ], Deleteria, Deleteria5, Deleteria10), x = list("Non Deleteria", "Deleteria", "Deleteria5",  "Deleteria10"),  y = ~n, type = 'bar', 
+    plot_ly(data = count(CaRinAF[CaRinAF$Tissue %in%  input$select_tissues_AF, ], Deleteria, Deleteria5, Deleteria10, Deleteria11), x = list("Non Deleteria", "Deleteria", "Deleteria5",  "Deleteria10", "Deleteria11"),  y = ~n, type = 'bar', 
             text = ~n, textposition="outside") %>%
       layout(showlegend = F, 
              yaxis = list(title = '# Mutations'),

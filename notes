@@ -46,3 +46,43 @@ https://sites.google.com/imd.ufrn.br/structuralbiome/
 https://docs.google.com/presentation/d/1A2pk3RE-v1shI1V_PRjTVPK8XHB1qKZ7NFhEzK2DIHA/present?slide=id.gc6f73a04f_0_0
 https://ring.biocomputingup.it/submit
 plus3d.app
+
+
+## 05/02/2024
+
+* Adding a new column "Deleteria11" based on the majority voting of 11 out of 20 predictors
+
+DO NASCIMENTO, PRISCILLA MACHADO ; MEDEIROS, INÁCIO GOMES ; FALCÃO, RAUL MAIA ; STRANSKY, BEATRIZ ; DE SOUZA, JORGE ESTEFANO SANTANA . A decision tree to improve identification of pathogenic mutations in clinical practice. BMC Medical Informatics and Decision Making, v. 20, p. 52, 2020. 
+
+
+## 05/03/2024
+
+- Structure on Bioinformatics "Application notes":
+https://www.biorxiv.org/content/10.1101/2020.06.29.178541v1
+https://academic.oup.com/bioinformatics/pages/About
+
+"One distinct section within the journal - Application Notes - focuses on shorter papers exploring the applications used for experiments."
+ 
+- Replace "Numerical Variable 1" to "x-axis";
+- Manter dado de summary estaticos;
+- Dados de All Pages baixa apenas as 10 primeiras páginas; : https://github.com/rstudio/DT/issues/267
+- Dicionnary of column;
+- Add legend / alt = para colunas;
+- Add static link to:
+* Uniprot  (Uniprot_id)
+https://www.uniprot.org/uniprotkb/Q9NRD1
+* PDB ()
+https://www.rcsb.org/structure/3LIT
+* AlphaFold 
+https://alphafold.ebi.ac.uk/entry/Q9NRD1 [uniprot_id]
+- 
+
+
+## 31/03/2024
+
+Adding columns: am_pathogenicity, am_class, changeProt_am, Deleterious11
+
+
+
+
+

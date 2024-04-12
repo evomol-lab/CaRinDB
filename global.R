@@ -140,9 +140,10 @@ CaRinDB <- CaRinDB %>%
 
 tissues <- unique(CaRinDB$Tissue)
 
-CaRinAF <- vroom::vroom("data/CaRinAF.csv", 
+CaRinAF <- vroom::vroom("data/CaRinAF.tsv", 
                         #n_max = 50,
-                        show_col_types = FALSE) 
+                        delim = '\t',
+                        show_col_types = TRUE) 
 CaRinAF_cols <- names(CaRinAF)
 CaRinAF <- CaRinAF %>%
   dplyr::mutate(SNP_search = link_snps(SNP_ID_COMMON),
@@ -154,6 +155,16 @@ CaRinAF <- CaRinAF %>%
 
 tissues_AF <- unique(CaRinAF$Tissue)
 
+callback <- JS(
+  "var a = document.createElement('a');",
+  "$(a).addClass('dt-button');",
+  "a.href = document.getElementById('downloadDB').href;",
+  "a.download = '';",
+  "$(a).attr('target', '_blank');",
+  "$(a).text('all data');",
+  "$('div.dwnld').append(a);",
+  "$('#downloadDB').hide();"
+)
 
 # summarytools::dfSummary(summarytools::dfSummary(CaRinDB, style="grid", method = "render"),
 #                    #varnumbers   = FALSE, 
