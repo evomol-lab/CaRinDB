@@ -63,26 +63,33 @@ https://academic.oup.com/bioinformatics/pages/About
 
 "One distinct section within the journal - Application Notes - focuses on shorter papers exploring the applications used for experiments."
  
-- Replace "Numerical Variable 1" to "x-axis";
-- Manter dado de summary estaticos;
-- Dados de All Pages baixa apenas as 10 primeiras páginas; : https://github.com/rstudio/DT/issues/267
+OK - Replace "Numerical Variable 1" to "x-axis";
+
+OK - Dados de All Pages baixa apenas as 10 primeiras páginas; : https://github.com/rstudio/DT/issues/267
+
+OK - Add static link to:
+  * Uniprot  (Uniprot_id)
+  https://www.uniprot.org/uniprotkb/Q9NRD1
+  * PDB ()
+  https://www.rcsb.org/structure/3LIT
+  * AlphaFold 
+  https://alphafold.ebi.ac.uk/entry/Q9NRD1 [uniprot_id]
+- Juntar os links? 
+ - Juntar links dbSNP com rs
+ - Alterar ordem: Tissue, Gene_EFF, RefSeq_EFF, Uniprot_id, (Gene_Search + RefSeq_Search + Uniprot_search, AlphaFold), (dbSNP + RS)
+
 - Dicionnary of column;
 - Add legend / alt = para colunas;
-- Add static link to:
-* Uniprot  (Uniprot_id)
-https://www.uniprot.org/uniprotkb/Q9NRD1
-* PDB ()
-https://www.rcsb.org/structure/3LIT
-* AlphaFold 
-https://alphafold.ebi.ac.uk/entry/Q9NRD1 [uniprot_id]
-- 
-
+- Manter dado de summary estaticos;
 
 ## 31/03/2024
 
 Adding columns: am_pathogenicity, am_class, changeProt_am, Deleterious11
 
 
+## 30/04/2024
+- 
 
-
+# TO DO
+- Produzir um campo de busca de genes
 

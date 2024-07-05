@@ -106,6 +106,27 @@ img_uri <-  memoize2(function(x) { sprintf('<img src="%s"/>', knitr::image_uri(x
 img_uri_icon <-  memoize2(function(x) { sprintf('<img src="%s" width="18" height="18"/>', knitr::image_uri(x)) })
 img_uri_favicon <-  memoize2(function(x) { sprintf('%s', knitr::image_uri(x)) })
 
+
+# - Add static link to:
+#   * Uniprot  (Uniprot_id)
+# https://www.uniprot.org/uniprotkb/Q9NRD1
+# * PDB (PDB_id)
+# https://www.rcsb.org/structure/3LIT
+# * AlphaFold 
+# https://alphafold.ebi.ac.uk/entry/Q9NRD1 [uniprot_id]
+
+link_uniprot <-  memoize2(function(val) {
+  sprintf('<a href="https://www.uniprot.org/uniprotkb/%s" target="_blank"><img src="%s"  width="90" height="20"/></a>', val,  knitr::image_uri("icons/logo_uniprot.png"))
+})
+
+link_pdb <-  memoize2(function(val) {
+  sprintf('<a href="https://www.rcsb.org/structure/%s" target="_blank"><img src="%s"  width="80" height="17"/></a>', val,  knitr::image_uri("icons/logo_pdb.png"))
+})
+
+link_af <-  memoize2(function(val) {
+  sprintf('<a href="https://alphafold.ebi.ac.uk/entry/%s" target="_blank"><img src="%s"  width="90" height="20"/></a>', val,  knitr::image_uri("icons/logo_af.png"))
+})
+
 link_genecards <-  memoize2(function(val) {
   sprintf('<a href="https://www.genecards.org/cgi-bin/carddisp.pl?gene=%s#publications" target="_blank"><img src="%s"  width="90" height="20"/></a>', val,  knitr::image_uri("icons/genecards.png"))
 })
@@ -125,33 +146,44 @@ link_proteins <-  memoize2(function(val) {
 # ==== Global variables ===============================================================
 
 # ==== Loading CaRinDB ================================================================
-CaRinDB <- vroom::vroom("data/CaRinDB.csv", 
-                        show_col_types = FALSE) 
+#CaRinDB <- vroom::vroom("data/CaRinDB.csv", 
+#                        show_col_types = FALSE) 
+
+load("data/CaRinDB.RData")
 
 CaRinDB <- CaRinDB %>%
   dplyr::mutate(SNP_search = link_snps(SNP_ID_COMMON),
                 Gene_search = link_genecards(Gene_EFF),
-                RefSeq_search = link_proteins(RefSeq_EFF))
+                RefSeq_search = link_proteins(RefSeq_EFF),
+                Uniprot_search = link_uniprot(Uniprot_id),
+                PDB_search = link_pdb(PDB_id),
+                AlphaFold_search = link_af(Uniprot_id)
+                )
 
 CaRinDB_cols <- names(CaRinDB)
 
 CaRinDB <- CaRinDB %>%
-  dplyr::select(c("Tissue", "Gene_EFF", "Gene_search", "SNP_ID_COMMON", "SNP_search", "RefSeq_EFF", "RefSeq_search", dplyr::all_of(CaRinDB_cols)))
+  dplyr::select(c("Tissue", "Gene_EFF", "Gene_search", "SNP_ID_COMMON", "SNP_search", "RefSeq_EFF", "RefSeq_search", "Uniprot_search", "PDB_search", "AlphaFold_search", dplyr::all_of(CaRinDB_cols)))
 
 tissues <- unique(CaRinDB$Tissue)
 
-CaRinAF <- vroom::vroom("data/CaRinAF.tsv", 
-                        #n_max = 50,
-                        delim = '\t',
-                        show_col_types = TRUE) 
+# CaRinAF <- vroom::vroom("data/CaRinAF.tsv", 
+#                         #n_max = 50,
+#                         delim = '\t',
+#                         show_col_types = TRUE) 
+load("data/CaRinAF.RData")
+
 CaRinAF_cols <- names(CaRinAF)
 CaRinAF <- CaRinAF %>%
   dplyr::mutate(SNP_search = link_snps(SNP_ID_COMMON),
                 Gene_search = link_genecards(Gene_EFF),
-                RefSeq_search = link_proteins(RefSeq_EFF))
+                RefSeq_search = link_proteins(RefSeq_EFF),
+                Uniprot_search = link_uniprot(Uniprot_id),
+                AlphaFold_search = link_af(Uniprot_id)
+                )
 
 CaRinAF <- CaRinAF %>%
-  dplyr::select(c("Tissue", "Gene_EFF", "Gene_search", "SNP_ID_COMMON", "SNP_search", "RefSeq_EFF", "RefSeq_search", dplyr::all_of(CaRinAF_cols)))
+  dplyr::select(c("Tissue", "Gene_EFF", "Gene_search", "SNP_ID_COMMON", "SNP_search", "RefSeq_EFF", "RefSeq_search",  "Uniprot_search", "AlphaFold_search", dplyr::all_of(CaRinAF_cols)))
 
 tissues_AF <- unique(CaRinAF$Tissue)
 

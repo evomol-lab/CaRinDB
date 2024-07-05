@@ -170,7 +170,7 @@ server <- function(input, output, session) {
   
   # Deleteria5/10/20 vs. Mutation number OK ----
   output$fig.bar.deleteriaTotMut <- renderPlotly({
-    plot_ly(data = count(CaRinDB[CaRinDB$Tissue %in%  input$select_tissues, ], Deleterious, Deleterious5, Deleterious10), x = list("Non Deleteria", "Deleteria", "Deleteria5",  "Deleteria10"),  y = ~n, type = 'bar', 
+    plot_ly(data = count(CaRinDB[CaRinDB$Tissue %in%  input$select_tissues, ], Deleteria, Deleteria5, Deleteria10, Deleteria11), x = list("Non Deleteria", "Deleteria", "Deleteria5",  "Deleteria10", "Deleteria11"),  y = ~n, type = 'bar', 
             text = ~n, textposition="outside") %>%
       layout(showlegend = F, 
              yaxis = list(title = '# Mutations'),
