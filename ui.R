@@ -35,11 +35,11 @@ ui <- fluidPage(
     div(img(src = "favicon.png", align = "left", width = "40px"), style = "border: 0px; padding: 0px; margin: -10px 0 0 10px;"),
     id = "nav",
     position = "fixed-top",
-    br(br()),
     # ==== Tab CaRinDB ===============================================================
     tabPanel(
       icon("home", lib = "glyphicon"), # Home
       fluidRow(
+        style = "padding-top: 3em;",
         wellPanel(
           p("CaRinDB is an integrated database of Cancer Mutations, Residue Interaction Networks and AlphaFold Protein Structure Database.")
           # br(),
@@ -95,7 +95,7 @@ ui <- fluidPage(
     ),
     # ==== Tab CaRinDB Variants ===============================================================
     tabPanel(
-      " CaRinDB",
+      "CaRinDB",
       icon = icon("list-alt", lib = "glyphicon"),
       fluidRow(
         column(
