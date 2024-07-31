@@ -570,7 +570,7 @@ server <- function(input, output, session) {
     print(
       summarytools::dfSummary(
         dplyr::select(CaRinAF[CaRinAF$Tissue %in% input$select_tissues_AF, grep("_search",  # Remove db references
-                                                                                colnames(CaRinDB),
+                                                                                colnames(CaRinAF),
                                                                                 value = T,
                                                                                 invert = T)], c(-3, -5, -7)),
         graph.magnif = 0.8,
