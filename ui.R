@@ -169,6 +169,17 @@ ui <- fluidPage(
           tabsetPanel(
             id = "tab_carindb",
             tabPanel(
+              "Summary",
+              p("Summary description of selected tissues."),
+              column(
+                12,
+                shinycssloaders::withSpinner(htmlOutput("summary_CaRinDB"),
+                                             size = 0.5, type = 1,
+                                             color.background = "white"
+                )
+              )
+            ),
+            tabPanel(
               "Plots",
               p(HTML(paste0("Plots of selected tissues: ", textOutput("res_tissues", inline = T), "."))),
               # Row 1 ----
@@ -206,17 +217,6 @@ ui <- fluidPage(
             tabPanel(
               title = "Custom plot",
               plotOutput("plot_DB")
-            ),
-            tabPanel(
-              "Summary",
-              p("Summary description of selected tissues."),
-              column(
-                12,
-                shinycssloaders::withSpinner(htmlOutput("summary_CaRinDB"),
-                  size = 0.5, type = 1,
-                  color.background = "white"
-                )
-              )
             )
           ),
           width = 9
@@ -298,6 +298,18 @@ ui <- fluidPage(
           tabsetPanel(
             id = "tab_carindbAF",
             tabPanel(
+              "Summary",
+              # Row 3 ----
+              p("Summary description of selected tissues."),
+              column(
+                12,
+                shinycssloaders::withSpinner(htmlOutput("summary_CaRinAF"),
+                                             size = 0.5, type = 1,
+                                             color.background = "white"
+                )
+              )
+            ),
+            tabPanel(
               "Plots",
               p(HTML(paste0("Plots of selected tissues: ", textOutput("res_tissues_AF", inline = T), "."))),
               # Row 1 ----
@@ -335,19 +347,7 @@ ui <- fluidPage(
             tabPanel(
               title = "Custom plot",
               plotOutput("plot_AF")
-            ),
-            tabPanel(
-              "Summary",
-              # Row 3 ----
-              p("Summary description of selected tissues."),
-              column(
-                12,
-                shinycssloaders::withSpinner(htmlOutput("summary_CaRinAF"),
-                  size = 0.5, type = 1,
-                  color.background = "white"
-                )
-              )
-            ),
+            )
           ),
           width = 9
         )
