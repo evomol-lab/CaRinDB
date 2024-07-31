@@ -91,10 +91,6 @@ ui <- fluidPage(
           )
         )
       ),
-      div(
-        "BioME/IMD/UFRN, EvoMol-Lab, The authors would like to thank CAPES.",
-        style = "position: fixed;left: 0;bottom: 0;width: 100%;background-color: #e95420;color: white;text-align: center;padding:0.5em 0;"
-      )
     ),
     # ==== Tab CaRinDB Variants ===============================================================
     tabPanel(
@@ -357,6 +353,10 @@ ui <- fluidPage(
           width = 9
         )
       )
+    ),
+    div(
+      "BioME/IMD/UFRN, EvoMol-Lab, The authors would like to thank CAPES.",
+      style = "position: fixed;left: 0;bottom: 0;width: 100%;background-color: #e95420;color: white;text-align: center;padding:0.5em 0;"
     )
   )
 )
