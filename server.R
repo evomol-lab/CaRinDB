@@ -77,8 +77,11 @@ server <- function(input, output, session) {
 
   CaRinDB_Tissue$Tissue <- factor(CaRinDB_Tissue$Tissue, levels = CaRinDB_Tissue$Tissue)
 
-  CaRinDB_Type_Mut_EFF <- count(CaRinDB, Type_Mut_EFF) %>%
-    mutate(Type_Mut_EFF = as.factor(Type_Mut_EFF))
+  CaRinDB_am_class <- count(CaRinDB, am_class) %>%
+    mutate(am_class = as.factor(am_class))
+
+  CaRinDB_Ndamage <- count(CaRinDB, Ndamage) %>%
+    mutate(Ndamage = as.factor(Ndamage))
 
 
   # Bar plot of Samples by Tissue ----
@@ -95,15 +98,30 @@ server <- function(input, output, session) {
       )
   })
 
-  # Pie chart of Tissue of Unique SNPs  ----
-  output$fig.pieType_Mut <- renderPlotly({
+  # Pie chart of Am_class SNPs  ----
+  output$fig.pieType_am <- renderPlotly({
     plot_ly() %>%
       add_pie(
-        data = CaRinDB_Type_Mut_EFF, labels = ~Type_Mut_EFF, values = ~n,
-        hole = 0, name = "Type_Mut_EFF", textinfo = "label+value", insidetextorientation = "radial", sort = FALSE
+        data = CaRinDB_am_class, labels = ~am_class, values = ~n,
+        hole = 0, name = "am_class", textinfo = "label+value", insidetextorientation = "radial", sort = FALSE
       ) %>%
       layout(
-        title = "#Mutation Type", showlegend = T,
+        title = "AM Class", showlegend = T,
+        xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+        yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+        font = list(size = 10)
+      )
+  })
+
+  # Pie chart of Ndamage SNPs  ----
+  output$fig.pieType_ndamage <- renderPlotly({
+    plot_ly() %>%
+      add_pie(
+        data = CaRinDB_Ndamage, labels = ~Ndamage, values = ~n,
+        hole = 0, name = "Ndamage", textinfo = "label+value", insidetextorientation = "radial", sort = FALSE
+      ) %>%
+      layout(
+        title = "Ndamage", showlegend = T,
         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
         font = list(size = 10)
@@ -303,7 +321,11 @@ server <- function(input, output, session) {
 
   CaRinAF_Tissue$Tissue <- factor(CaRinAF_Tissue$Tissue, levels = CaRinAF_Tissue$Tissue)
 
+  CaRinAF_am_class <- count(CaRinAF, am_class) %>%
+    mutate(am_class = as.factor(am_class))
 
+  CaRinAF_Ndamage <- count(CaRinAF, Ndamage) %>%
+    mutate(Ndamage = as.factor(Ndamage))
 
   # Bar plot of Samples by Tissue ----
   output$fig.AF.barTissue <- renderPlotly({
@@ -316,6 +338,66 @@ server <- function(input, output, session) {
         xaxis = list(title = "Cancer_Type", tickangle = -45),
         font = list(size = 10),
         title = "CaRinDB::AlphaFold with 33 tissues"
+      )
+  })
+
+  # Pie chart of AF Am_class SNPs  ----
+  output$fig.AF.pieType_am <- renderPlotly({
+    plot_ly() %>%
+      add_pie(
+        data = CaRinAF_am_class, labels = ~am_class, values = ~n,
+        hole = 0, name = "am_class", textinfo = "label+value", insidetextorientation = "radial", sort = FALSE
+      ) %>%
+      layout(
+        title = "AM Class", showlegend = T,
+        xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+        yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+        font = list(size = 10)
+      )
+  })
+
+  # Pie chart of Ndamage SNPs  ----
+  output$fig.AF.pieType_ndamage <- renderPlotly({
+    plot_ly() %>%
+      add_pie(
+        data = CaRinAF_Ndamage, labels = ~Ndamage, values = ~n,
+        hole = 0, name = "Ndamage", textinfo = "label+value", insidetextorientation = "radial", sort = FALSE
+      ) %>%
+      layout(
+        title = "Ndamage", showlegend = T,
+        xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+        yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+        font = list(size = 10)
+      )
+  })
+
+  # Pie chart of Am_class SNPs  ----
+  output$fig.ApieType_am <- renderPlotly({
+    plot_ly() %>%
+      add_pie(
+        data = CaRinDB_am_class, labels = ~am_class, values = ~n,
+        hole = 0, name = "am_class", textinfo = "label+value", insidetextorientation = "radial", sort = FALSE
+      ) %>%
+      layout(
+        title = "AM Class", showlegend = T,
+        xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+        yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+        font = list(size = 10)
+      )
+  })
+
+  # Pie chart of Ndamage SNPs  ----
+  output$fig.pieType_ndamage <- renderPlotly({
+    plot_ly() %>%
+      add_pie(
+        data = CaRinDB_Ndamage, labels = ~Ndamage, values = ~n,
+        hole = 0, name = "Ndamage", textinfo = "label+value", insidetextorientation = "radial", sort = FALSE
+      ) %>%
+      layout(
+        title = "Ndamage", showlegend = T,
+        xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+        yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+        font = list(size = 10)
       )
   })
 

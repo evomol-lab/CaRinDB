@@ -56,12 +56,16 @@ ui <- fluidPage(
             # Row 1 ----
             # sidebarPanel(
             column(
-              9,
+              6,
               shinycssloaders::withSpinner(plotlyOutput("fig.barTissue"), size = 1, type = 1, color.background = "white")
             ),
             column(
               3,
-              shinycssloaders::withSpinner(plotlyOutput("fig.pieType_Mut"), size = 0.5, type = 1, color.background = "white")
+              shinycssloaders::withSpinner(plotlyOutput("fig.pieType_am"), size = 0.5, type = 1, color.background = "white")
+            ),
+            column(
+              3,
+              shinycssloaders::withSpinner(plotlyOutput("fig.pieType_ndamage"), size = 0.5, type = 1, color.background = "white")
             ),
             # Row 2 ----
             column(
@@ -75,12 +79,16 @@ ui <- fluidPage(
               )
             ),
             column(
-              9,
+              6,
               shinycssloaders::withSpinner(plotlyOutput("fig.AF.barTissue"), size = 1, type = 1, color.background = "white")
             ),
             column(
               3,
-              # shinycssloaders::withSpinner(plotlyOutput("fig.pieType_Mut"), size = 0.5, type=1, color.background = "white")
+              shinycssloaders::withSpinner(plotlyOutput("fig.AF.pieType_am"), size = 0.5, type=1, color.background = "white")
+            ),
+            column(
+              3,
+              shinycssloaders::withSpinner(plotlyOutput("fig.AF.pieType_ndamage"), size = 0.5, type=1, color.background = "white")
             ),
             column(
               12,
