@@ -39,14 +39,9 @@ ui <- fluidPage(
     tabPanel(
       icon("home", lib = "glyphicon"), # Home
       fluidRow(
-        style = "padding-top: 3em;",
+        style = "padding: 3em 0;",
         wellPanel(
           p("CaRinDB is an integrated database of Cancer Mutations, Residue Interaction Networks and AlphaFold Protein Structure Database.")
-          # br(),
-          # icon("cog", lib = "glyphicon"),
-          # em( "Click on legends of plots to activate or deactivate labels."), br(),
-          # br(),
-          # actionButton("guide", " Run guided tour", icon = icon("info-sign", lib = "glyphicon"))
         ),
         div(
           id = "plots",
@@ -75,7 +70,7 @@ ui <- fluidPage(
                   12,
                   p("CaRinDB integrated to AlphaFold Protein Structure Database:")
                 ),
-                br(br())
+                br()
               )
             ),
             column(
@@ -92,19 +87,17 @@ ui <- fluidPage(
             ),
             column(
               12,
-              wellPanel(
-                column(3, ),
-                br(br())
-              )
-            )
+            ),
           )
         )
-      )
+      ),
+      tags$footer("The footer.", class = "footer")
     ),
     # ==== Tab CaRinDB Variants ===============================================================
     tabPanel(
       "CaRinDB",
       icon = icon("list-alt", lib = "glyphicon"),
+      style = "padding: 3em 0;",
       fluidRow(
         column(
           12,
@@ -236,6 +229,7 @@ ui <- fluidPage(
     tabPanel(
       "CaRinDB::AlphaFold",
       icon = icon("list-alt", lib = "glyphicon"),
+      style = "padding: 3em 0;",
       fluidRow(
         column(
           12,
