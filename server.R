@@ -551,7 +551,11 @@ server <- function(input, output, session) {
   # })
   output$summary_CaRinDB <- renderUI({
     print(
-      summarytools::dfSummary(dplyr::select(CaRinDB[CaRinDB$Tissue %in% input$select_tissues, ], c(-3, -5, -7)),
+      summarytools::dfSummary(
+        dplyr::select(CaRinDB[CaRinDB$Tissue %in% input$select_tissues, grep("_search", # Remove db references
+                                                                             colnames(CaRinDB),
+                                                                             value = T,
+                                                                             invert = T)], c(-3, -5, -7)),
         graph.magnif = 0.8,
         na.col = FALSE,
         footnote = NA
@@ -564,7 +568,11 @@ server <- function(input, output, session) {
 
   output$summary_CaRinAF <- renderUI({
     print(
-      summarytools::dfSummary(dplyr::select(CaRinAF[CaRinAF$Tissue %in% input$select_tissues_AF, ], c(-3, -5, -7)),
+      summarytools::dfSummary(
+        dplyr::select(CaRinAF[CaRinAF$Tissue %in% input$select_tissues_AF, grep("_search",  # Remove db references
+                                                                                colnames(CaRinDB),
+                                                                                value = T,
+                                                                                invert = T)], c(-3, -5, -7)),
         graph.magnif = 0.8,
         na.col = FALSE,
         footnote = NA
