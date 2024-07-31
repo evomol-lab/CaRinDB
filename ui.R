@@ -139,7 +139,7 @@ ui <- fluidPage(theme = shinytheme("united"),
             ),
           icon("cog", lib = "glyphicon"),                                           
           em( "Use ",
-              a("regex", href="misc/cheatsheets_regex.pdf", target="_blank"), 
+              a("regex", href="https://en.wikipedia.org/wiki/Regular_expression", target="_blank"),
               " to search in datatables."
           ),
           br(),
