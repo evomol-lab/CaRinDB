@@ -40,11 +40,18 @@ ui <- fluidPage(
       icon("home", lib = "glyphicon"), # Home
       fluidRow(
         style = "padding: 3em 0;",
-        wellPanel(
-          p("CaRinDB is an integrated database of Cancer Mutations, Residue Interaction Networks and AlphaFold Protein Structure Database.")
-        ),
         div(
           id = "plots",
+          column(
+            12,
+            wellPanel(
+              column(
+                12,
+                p("CaRinDB is an integrated database of Cancer Mutations, Residue Interaction Networks and AlphaFold Protein Structure Database.")
+              ),
+              br()
+            )
+          ),
           div(
             id = "plots_sec1",
             # fluidRow(
