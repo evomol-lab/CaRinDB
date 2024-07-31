@@ -361,6 +361,34 @@ ui <- fluidPage(
         )
       )
     ),
+    # ==== Tab How To Use ===============================================================
+    tabPanel(
+      "How To Use",
+      icon = icon("question-sign", lib = "glyphicon"),
+      style = "padding: 3em 0;",
+      fluidRow(
+        column(
+          12,
+          wellPanel(
+            p("Sit in ipsum qui quod quae ducimus sint. Id in at consequatur voluptatem.")
+          )
+        )
+      ),
+    ),
+    # ==== Tab About ===============================================================
+    tabPanel(
+      "About",
+      icon = icon("align-left", lib = "glyphicon"),
+      style = "padding: 3em 0;",
+      fluidRow(
+        column(
+          12,
+          wellPanel(
+            p("Voluptas quia qui facere in laboriosam. Quia et cupiditate eum aperiam hic enim. At et esse vero beatae.")
+          )
+        )
+      ),
+    ),
     div(
       "BioME/IMD/UFRN, EvoMol-Lab, The authors would like to thank CAPES.",
       style = "position: fixed;left: 0;bottom: 0;width: 100%;background-color: #e95420;color: white;text-align: center;padding:0.5em 0;"
