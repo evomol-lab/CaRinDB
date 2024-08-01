@@ -83,12 +83,25 @@ server <- function(input, output, session) {
   CaRinDB_Ndamage <- count(CaRinDB, Ndamage) %>%
     mutate(Ndamage = as.factor(Ndamage))
 
+  CaRinDB_genes <- unique(CaRinDB$Gene_EFF)
+
+  output$gene_search <- renderUI({
+    selectizeInput(
+      "selectize_gene",
+      label = "Type a gene symbol:",
+      choices = CaRinDB_genes,
+      width = "200px",
+      multiple = TRUE,
+      options = list(maxItems = 1)
+    )
+  })
+
   output$tb_gene_search <- DT::renderDataTable(
     if (!is.null(input$selectize_gene) && length(input$selectize_gene) > 0)
     {
       # w$show()
       DT::datatable(
-        CaRinDB[CaRinDB$Gene_EFF == "KDM1A", names(CaRinDB)[c(1:9)]],
+        CaRinDB[CaRinDB$Gene_EFF == input$selectize_gene, names(CaRinDB)[c(1:9)]],
         class = "cell-border stripe",
         rownames = FALSE,
         filter = "none",
