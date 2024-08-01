@@ -199,6 +199,7 @@ CaRinDB <- CaRinDB %>%
   dplyr::select(c("Tissue", "Gene_EFF", "Gene_search", "SNP_ID_COMMON", "SNP_search", "RefSeq_EFF", "RefSeq_search", "Uniprot_search", "PDB_search", "AlphaFold_search", dplyr::all_of(CaRinDB_cols)))
 
 tissues <- unique(CaRinDB$Tissue)
+names(tissues) <- paste0("teste", " (", tissues, ")")
 
 # CaRinAF <- vroom::vroom("data/CaRinAF.tsv",
 #                         #n_max = 50,
@@ -220,6 +221,7 @@ CaRinAF <- CaRinAF %>%
   dplyr::select(c("Tissue", "Gene_EFF", "Gene_search", "SNP_ID_COMMON", "SNP_search", "RefSeq_EFF", "RefSeq_search", "Uniprot_search", "AlphaFold_search", dplyr::all_of(CaRinAF_cols)))
 
 tissues_AF <- unique(CaRinAF$Tissue)
+names(tissues_AF) <- paste0("teste", " (", tissues, ")")
 
 callback <- JS(
   "var a = document.createElement('a');",
