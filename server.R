@@ -84,6 +84,7 @@ server <- function(input, output, session) {
     mutate(Ndamage = as.factor(Ndamage))
 
   output$tb_gene_search <- DT::renderDataTable(
+    if (!is.null(input$selectize_gene) && length(input$selectize_gene) > 0)
     {
       # w$show()
       DT::datatable(
@@ -92,7 +93,7 @@ server <- function(input, output, session) {
         rownames = FALSE,
         filter = "none",
         options = list(dom = '<"d-flex-buttons"B>t',
-        # dom = 'lBfrtip',
+        scrollX = TRUE,
         buttons =
           list(
             list(
