@@ -413,12 +413,62 @@ ui <- fluidPage(
       style = "padding: 3em 0;",
       fluidRow(
         column(
-          12,
+          6,
           wellPanel(
-            p("Voluptas quia qui facere in laboriosam. Quia et cupiditate eum aperiam hic enim. At et esse vero beatae.")
+            h4(HTML("<b>Data Sources</b>")),
+            p("Sit in ipsum qui quod quae ducimus sint. Id in at consequatur voluptatem.")
+          )
+        ),
+        column(
+          6,
+          wellPanel(
+            h4(HTML("<b>Citation</b>")),
+            h5(HTML(
+              "<i># If you have used CaRinDB for your research, please cite:</i>"
+            )),
+            p("Sit in ipsum qui quod quae ducimus sint. Id in at consequatur voluptatem."),
+            h5("Affiliations"),
+            HTML(
+              paste0(
+                tags$sup("1"),
+                "Bioinformatics Multidisciplinary Environment - BioME, Federal University of Rio Grande do Norte - UFRN, Brazil"
+              )
+            ),
+            br(),
+            HTML(paste0(
+              tags$sup("2"), "Digital Metropolis Institute, UFRN, Brazil"
+            )),
+            br(),
+            HTML(paste0(
+              tags$sup("3"), "Department of Biochemistry, UFRN, Brazil"
+            )),
+            br(),
+            br(),
+            h4(HTML("<b>Contact</b>")),
+            p("Iure iusto dolorem expedita quidem labore.
+              Sint qui labore doloribus et incidunt voluptatum velit adipisci.
+              Repudiandae occaecati architecto nobis iure."),
           )
         )
       ),
+      fluidRow(
+        column(
+          6,
+          wellPanel(
+            h4(HTML("<b>License</b>")),
+            p("Sit in ipsum qui quod quae ducimus sint. Id in at consequatur voluptatem.")
+          )
+        ),
+        column(
+          6,
+          wellPanel(
+            h4(HTML("<b>Data Dictionary</b>")),
+            p("Iure iusto dolorem expedita quidem labore.
+              Sint qui labore doloribus et incidunt voluptatum velit adipisci.
+              Repudiandae occaecati architecto nobis iure.")
+          )
+        )
+      )
     )
   ),
   div("BioME/IMD/UFRN, EvoMol-Lab, The authors would like to thank CAPES.",
