@@ -401,7 +401,10 @@ ui <- fluidPage(
         column(
           12,
           wellPanel(
-            p("Sit in ipsum qui quod quae ducimus sint. Id in at consequatur voluptatem.")
+            style = "text-align: center;",
+            h2("How to Use CaRinDB"),
+            p("Watch the video below for a simple tutorial on how to use our platform."),
+            HTML('<iframe width="860" height="515" src="https://www.youtube.com/embed/fCd6B5HRaZ8?si=xxFB1T7pBQ7VBnSu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>')
           )
         )
       ),
