@@ -45,11 +45,10 @@ ui <- fluidPage(
           column(
             12,
             wellPanel(
-              column(
-                12,
-                p("CaRinDB is an integrated database of Cancer Mutations, Residue Interaction Networks and AlphaFold Protein Structure Database.")
-              ),
-              br()
+              style="display: grid; place-items: center;text-align:center",
+              fluidRow(style="display: flex; place-items: center; margin: 1em 0;", img(src = "favicon.png", align = "left", width = "40px"), h1(style="margin: 0 0.2em", "CaRinDB")),
+              p("CaRinDB is an integrated database of Cancer Mutations, Residue Interaction Networks and AlphaFold Protein Structure Database."),
+              p("It allows the exploration of...."),
             )
           ),
           div(
