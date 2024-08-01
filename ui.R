@@ -16,6 +16,10 @@ ui <- fluidPage(
           background: transparent !important;
           outline: 5000px solid rgba(0, 0, 0, .75)
         }
+        .d-flex-buttons {
+          display: flex;
+          justify-content: center;
+        }
         "
       )
     ),
@@ -57,10 +61,13 @@ ui <- fluidPage(
               p("It allows the exploration of...."),
               selectizeInput(
                 "selectize_gene",
-                label = "Gene symbol or Uniprot ID",
+                label = "Type a gene symbol:",
                 choices = c("bla", "blu"),
-                width = "200px"
-              )
+                width = "200px",
+                multiple = TRUE,
+                options = list(maxItems = 1)
+              ),
+              column(8, shinycssloaders::withSpinner(DT::dataTableOutput("tb_gene_search"), size = 0.5, type = 1, color.background = "white"))
             )
           ),
           div(

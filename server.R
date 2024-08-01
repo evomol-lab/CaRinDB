@@ -83,6 +83,40 @@ server <- function(input, output, session) {
   CaRinDB_Ndamage <- count(CaRinDB, Ndamage) %>%
     mutate(Ndamage = as.factor(Ndamage))
 
+  output$tb_gene_search <- DT::renderDataTable(
+    {
+      # w$show()
+      DT::datatable(
+        CaRinDB[CaRinDB$Gene_EFF == "KDM1A", names(CaRinDB)[c(1:9)]],
+        class = "cell-border stripe",
+        rownames = FALSE,
+        filter = "none",
+        options = list(dom = '<"d-flex-buttons"B>t',
+        # dom = 'lBfrtip',
+        buttons =
+          list(
+            list(
+              extend = "pdf",
+              text = img_uri_icon("icons/pdf_icon.png"),
+              pageSize = "A4",
+              orientation = "landscape",
+              filename = "CaRinDB"
+            ),
+            list(
+              extend = "csv",
+              text = '<span class="glyphicon glyphicon-download-alt"></span> Current Page (csv)',
+              filename = "CaRinDB_page",
+              exportOptions = list(
+                modifier = list(page = "current")
+              )
+            )
+          )),
+        extensions = c("Buttons", "ColReorder"),
+        escape = FALSE
+      )
+    },
+    server = TRUE
+  )
 
   # Bar plot of Samples by Tissue ----
   output$fig.barTissue <- renderPlotly({
