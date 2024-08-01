@@ -101,7 +101,11 @@ server <- function(input, output, session) {
     {
       # w$show()
       DT::datatable(
-        CaRinDB[CaRinDB$Gene_EFF == input$selectize_gene, names(CaRinDB)[c(1:9)]],
+        if (input$db_source == "CaRinAF") {
+          CaRinAF[CaRinAF$Gene_EFF == input$selectize_gene, names(CaRinAF)[c(1:9)]]
+        } else {
+          CaRinDB[CaRinDB$Gene_EFF == input$selectize_gene, names(CaRinDB)[c(1:9)]]
+        },
         class = "cell-border stripe",
         rownames = FALSE,
         filter = "none",

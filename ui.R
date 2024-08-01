@@ -59,8 +59,28 @@ ui <- fluidPage(
                 "CaRinDB is an integrated database of Cancer Mutations, Residue Interaction Networks and AlphaFold Protein Structure Database."
               ),
               p("It allows the exploration of...."),
-              shinycssloaders::withSpinner(uiOutput("gene_search"), size = 0.2, type = 1, color.background = "white"),
-              column(8, shinycssloaders::withSpinner(DT::dataTableOutput("tb_gene_search"), size = 0.5, type = 1, color.background = "white"))
+              radioButtons(
+                "db_source",
+                "Database:",
+                c("CaRinDB" = "CaRinDB",
+                  "CaRinDB::AlphaFold" = "CaRinAF"),
+                inline = TRUE
+              ),
+              shinycssloaders::withSpinner(
+                uiOutput("gene_search"),
+                size = 0.2,
+                type = 1,
+                color.background = "white"
+              ),
+              column(
+                8,
+                shinycssloaders::withSpinner(
+                  DT::dataTableOutput("tb_gene_search"),
+                  size = 0.5,
+                  type = 1,
+                  color.background = "white"
+                )
+              )
             )
           ),
           div(
