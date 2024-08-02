@@ -198,6 +198,9 @@ CaRinDB_cols <- names(CaRinDB)
 CaRinDB <- CaRinDB %>%
   dplyr::select(c("Tissue", "Gene_EFF", "Gene_search", "SNP_ID_COMMON", "SNP_search", "RefSeq_EFF", "RefSeq_search", "Uniprot_search", "PDB_search", "AlphaFold_search", dplyr::all_of(CaRinDB_cols)))
 
+CaRinDB <- CaRinDB %>%
+  dplyr::mutate(am_class = ifelse(is.na(am_class), "unclassified", am_class))
+
 tissues <- unique(CaRinDB$Tissue)
 names(tissues) <- paste0("teste", " (", tissues, ")")
 
@@ -227,6 +230,9 @@ CaRinAF <- CaRinAF %>%
 
 CaRinAF <- CaRinAF %>%
   dplyr::select(c("Tissue", "Gene_EFF", "Gene_search", "SNP_ID_COMMON", "SNP_search", "RefSeq_EFF", "RefSeq_search", "Uniprot_search", "AlphaFold_search", dplyr::all_of(CaRinAF_cols)))
+
+CaRinAF <- CaRinAF %>%
+  dplyr::mutate(am_class = ifelse(is.na(am_class), "unclassified", am_class))
 
 tissues_AF <- unique(CaRinAF$Tissue)
 names(tissues_AF) <- paste0("teste", " (", tissues, ")")

@@ -79,7 +79,11 @@ ui <- fluidPage(
                   size = 0.5,
                   type = 1,
                   color.background = "white"
-                ),
+                )
+              ),
+              column(
+                12,
+                style="margin-top: 1em",
                 shinycssloaders::withSpinner(
                   DT::dataTableOutput("tb_gene_search"),
                   size = 0.5,

@@ -78,7 +78,6 @@ server <- function(input, output, session) {
   CaRinDB_Tissue$Tissue <- factor(CaRinDB_Tissue$Tissue, levels = CaRinDB_Tissue$Tissue)
 
   CaRinDB_am_class <- count(CaRinDB, am_class) %>%
-    mutate(am_class = ifelse(is.na(am_class), "unclassified", am_class)) %>%
     mutate(am_class = as.factor(am_class))
 
   CaRinDB_Ndamage <- count(CaRinDB, Ndamage) %>%
@@ -110,7 +109,6 @@ server <- function(input, output, session) {
 
     req(input$selectize_gene)
     gene_mutations <- gene_table() %>%
-      mutate(am_class = ifelse(is.na(am_class), "unclassified", am_class)) %>%
       group_by(Tissue, am_class) %>%
       count() %>%
       ungroup()
@@ -146,12 +144,12 @@ server <- function(input, output, session) {
   output$tb_gene_search <- DT::renderDataTable(
     if (!is.null(input$selectize_gene) && length(input$selectize_gene) > 0)
     {
-      # w$show()
+      cols <- c("Ndamage", "Deleteria", "Deleteria5", "Deleteria10", "Deleteria11", "am_class", "Degree_RING", "Inter_Res_tot")
       DT::datatable(
         if (input$db_source == "CaRinAF") {
-          CaRinAF[CaRinAF$Gene_EFF == input$selectize_gene, names(CaRinAF)[c(1:9)]]
+          CaRinAF[CaRinAF$Gene_EFF == input$selectize_gene, c(names(CaRinAF)[c(1, 3:5, 7:9)], cols)]
         } else {
-          CaRinDB[CaRinDB$Gene_EFF == input$selectize_gene, names(CaRinDB)[c(1:9)]]
+          CaRinDB[CaRinDB$Gene_EFF == input$selectize_gene, c(names(CaRinDB)[c(1, 3:5, 7:9)], cols)]
         },
         class = "cell-border stripe",
         rownames = FALSE,
@@ -421,7 +419,6 @@ server <- function(input, output, session) {
   CaRinAF_Tissue$Tissue <- factor(CaRinAF_Tissue$Tissue, levels = CaRinAF_Tissue$Tissue)
 
   CaRinAF_am_class <- count(CaRinAF, am_class) %>%
-    mutate(am_class = ifelse(is.na(am_class), "unclassified", am_class)) %>%
     mutate(am_class = as.factor(am_class))
 
   CaRinAF_Ndamage <- count(CaRinAF, Ndamage) %>%
