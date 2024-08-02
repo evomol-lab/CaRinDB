@@ -78,6 +78,7 @@ server <- function(input, output, session) {
   CaRinDB_Tissue$Tissue <- factor(CaRinDB_Tissue$Tissue, levels = CaRinDB_Tissue$Tissue)
 
   CaRinDB_am_class <- count(CaRinDB, am_class) %>%
+    mutate(am_class = ifelse(is.na(am_class), "unclassified", am_class)) %>%
     mutate(am_class = as.factor(am_class))
 
   CaRinDB_Ndamage <- count(CaRinDB, Ndamage) %>%
@@ -374,6 +375,7 @@ server <- function(input, output, session) {
   CaRinAF_Tissue$Tissue <- factor(CaRinAF_Tissue$Tissue, levels = CaRinAF_Tissue$Tissue)
 
   CaRinAF_am_class <- count(CaRinAF, am_class) %>%
+    mutate(am_class = ifelse(is.na(am_class), "unclassified", am_class)) %>%
     mutate(am_class = as.factor(am_class))
 
   CaRinAF_Ndamage <- count(CaRinAF, Ndamage) %>%
