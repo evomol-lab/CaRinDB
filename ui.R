@@ -75,6 +75,12 @@ ui <- fluidPage(
               column(
                 8,
                 shinycssloaders::withSpinner(
+                  uiOutput("fig.bar.gene_search.ui"),
+                  size = 0.5,
+                  type = 1,
+                  color.background = "white"
+                ),
+                shinycssloaders::withSpinner(
                   DT::dataTableOutput("tb_gene_search"),
                   size = 0.5,
                   type = 1,

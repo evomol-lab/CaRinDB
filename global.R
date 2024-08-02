@@ -201,6 +201,14 @@ CaRinDB <- CaRinDB %>%
 tissues <- unique(CaRinDB$Tissue)
 names(tissues) <- paste0("teste", " (", tissues, ")")
 
+# AM Class color pallette
+am_class_palette <- c(
+  "benign" = "#ff7f0e",
+  "pathogenic" = "#2ca02c",
+  "ambiguous" = "#1f77b4",
+  "unclassified" = "#d62728"
+)
+
 # CaRinAF <- vroom::vroom("data/CaRinAF.tsv",
 #                         #n_max = 50,
 #                         delim = '\t',

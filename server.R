@@ -97,6 +97,52 @@ server <- function(input, output, session) {
     )
   })
 
+  gene_table <- reactive({
+    req(input$selectize_gene)
+    if (input$db_source == "CaRinAF") {
+      CaRinAF[CaRinAF$Gene_EFF == input$selectize_gene, ]
+    } else {
+      CaRinDB[CaRinDB$Gene_EFF == input$selectize_gene, ]
+    }
+  })
+
+  output$fig.bar.gene_search <- renderPlotly({
+
+    req(input$selectize_gene)
+    gene_mutations <- gene_table() %>%
+      mutate(am_class = ifelse(is.na(am_class), "unclassified", am_class)) %>%
+      group_by(Tissue, am_class) %>%
+      count() %>%
+      ungroup()
+
+    data_summary <- gene_mutations %>%
+      group_by(Tissue) %>%
+      summarize(total_mutations = sum(n)) %>%
+      arrange(desc(total_mutations))
+
+    gene_mutations$Tissue <- factor(gene_mutations$Tissue, levels = data_summary$Tissue)
+
+    plot_ly(
+      data = gene_mutations, x = ~Tissue, y = ~n, type = "bar", labels = ~Tissue,
+      text = ~n, color = ~am_class, textposition = "none", sort = T, text_auto = ".2s",
+      textangle = 0, textfont.size = 8, colors = am_class_palette
+    ) %>%
+      layout(
+        showlegend = T, yaxis = list(title = "#Mutations by Cancer Type"),
+        xaxis = list(title = "Cancer_Type", tickangle = -45),
+        font = list(size = 10),
+        barmode = 'stack',
+        plot_bgcolor="transparent",
+        paper_bgcolor="transparent"
+    )
+  })
+
+  # This is done in order to avoid plotly taking up height when there's no plot
+  output$fig.bar.gene_search.ui <- renderUI({
+    req(input$selectize_gene)
+    plotlyOutput("fig.bar.gene_search")
+  })
+
   output$tb_gene_search <- DT::renderDataTable(
     if (!is.null(input$selectize_gene) && length(input$selectize_gene) > 0)
     {
