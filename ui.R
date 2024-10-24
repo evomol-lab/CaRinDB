@@ -466,19 +466,20 @@ ui <- fluidPage(
       ),
       fluidRow(
         column(
-          6,
+          4,
           wellPanel(
             h4(HTML("<b>License</b>")),
             p("Sit in ipsum qui quod quae ducimus sint. Id in at consequatur voluptatem.")
           )
         ),
         column(
-          6,
+          8,
           wellPanel(
             h4(HTML("<b>Data Dictionary</b>")),
-            p("Iure iusto dolorem expedita quidem labore.
-              Sint qui labore doloribus et incidunt voluptatum velit adipisci.
-              Repudiandae occaecati architecto nobis iure.")
+            tags$iframe(src = 'CaRinDB - Data dictionary.html',
+                        width = '100%', height = '400px',
+                        frameborder = 0, scrolling = 'auto'
+            )
           )
         )
       )
