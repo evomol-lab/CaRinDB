@@ -1,0 +1,8 @@
+services:
+  carindb:
+    build: docker_config
+    container_name: carindb
+    ports:
+    - "3839:3838"
+    volumes:
+    - ./:/srv/CaRinDB/
