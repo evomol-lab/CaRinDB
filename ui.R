@@ -1,7 +1,8 @@
-#if(!require(shinythemes, quietly=TRUE, warn.conflicts=FALSE)){ install.packages('shinythemes', quiet=TRUE) }
+# if(!require(shinythemes, quietly=TRUE, warn.conflicts=FALSE)){ install.packages('shinythemes', quiet=TRUE) }
 not_sel <- "Not Selected"
 # ==== ui.R ===============================================================
-ui <- fluidPage(theme = shinytheme("united"),
+ui <- fluidPage(
+  theme = shinytheme("united"),
   tags$head(
     tags$style(
       HTML(
@@ -15,82 +16,143 @@ ui <- fluidPage(theme = shinytheme("united"),
           background: transparent !important;
           outline: 5000px solid rgba(0, 0, 0, .75)
         }
+        .d-flex-buttons {
+          display: flex;
+          justify-content: center;
+        }
         "
       )
     ),
-   # includeHTML("www/google-analytics.html")
+    # includeHTML("www/google-analytics.html")
   ),
-    # Application title
+  # Application title
   titlePanel(
     windowTitle = "CaRinDB",
-    title = tags$head(tags$link(rel="icon",
-                                href=img_uri_favicon("icons/favicon.png"),
-                                type="image/x-icon"))
+    title = tags$head(tags$link(
+      rel = "icon",
+      href = img_uri_favicon("icons/favicon.png"),
+      type = "image/x-icon"
+    ))
   ),
   navbarPage(
     windowTitle = "CaRinDB",
-    div(img(src="favicon.png", align="left", width="40px"), style="border: 0px; padding: 0px; margin: -10px 0 0 10px;" ), 
+    div(img(src = "favicon.png", align = "left", width = "40px"), style = "border: 0px; padding: 0px; margin: -10px 0 0 10px;"),
     id = "nav",
     position = "fixed-top",
-    br(br()),
     # ==== Tab CaRinDB ===============================================================
-    tabPanel(icon("home", lib = "glyphicon"), # Home
-            fluidRow(
-            wellPanel(p("CaRinDB is an integrated database of Cancer Mutations, Residue Interaction Networks and AlphaFold Protein Structure Database.")
-                                    #br(),
-                                    #icon("cog", lib = "glyphicon"), 
-                                    #em( "Click on legends of plots to activate or deactivate labels."), br(),
-                                    #br(),
-                                    #actionButton("guide", " Run guided tour", icon = icon("info-sign", lib = "glyphicon"))
-            ),
-             div(
-                 id = "plots",
-                 div(
-                   id = "plots_sec1",
-                   #fluidRow(
-                     # Row 1 ----
-                     #sidebarPanel(
-                     column(9,
-                            shinycssloaders::withSpinner(plotlyOutput("fig.barTissue"), size = 1, type=1, color.background = "white")
-                     ),
-                     column(3,
-                            shinycssloaders::withSpinner(plotlyOutput("fig.pieType_Mut"), size = 0.5, type=1, color.background = "white")
-                     ),
-                     # Row 2 ----
-                   column(12,
-                      wellPanel(
-                      column(12,  
-                      p("CaRinDB integrated to AlphaFold Protein Structure Database:")
-                      ),
-                      br(br())
-                      )
-                    ),
-                   column(9,
-                          shinycssloaders::withSpinner(plotlyOutput("fig.AF.barTissue"), size = 1, type=1, color.background = "white")
-                   ),
-                   column(3,
-                          #shinycssloaders::withSpinner(plotlyOutput("fig.pieType_Mut"), size = 0.5, type=1, color.background = "white")
-                   ),
-                    column(12,
-                      wellPanel(
-                      column(3,  
-                      ),
-                      br(br())))
-                     )
+    tabPanel(
+      icon("home", lib = "glyphicon"), # Home
+      fluidRow(
+        style = "padding: 3em 0;",
+        div(
+          id = "plots",
+          column(
+            12,
+            wellPanel(
+              style = "display: grid; place-items: center;text-align:center",
+              fluidRow(
+                style = "display: flex; place-items: center; margin: 1em 0;",
+                img(src = "favicon.png", align = "left", width = "40px"),
+                h1(style = "margin: 0 0.2em", "CaRinDB")
+              ),
+              p(
+                "CaRinDB is an integrated database of Cancer Mutations, Residue Interaction Networks and AlphaFold Protein Structure Database."
+              ),
+              p("It allows the exploration of...."),
+              radioButtons(
+                "db_source",
+                "Database:",
+                c("CaRinDB" = "CaRinDB",
+                  "CaRinDB::AlphaFold" = "CaRinAF"),
+                inline = TRUE
+              ),
+              shinycssloaders::withSpinner(
+                uiOutput("gene_search"),
+                size = 0.2,
+                type = 1,
+                color.background = "white"
+              ),
+              column(
+                8,
+                shinycssloaders::withSpinner(
+                  uiOutput("fig.bar.gene_search.ui"),
+                  size = 0.5,
+                  type = 1,
+                  color.background = "white"
                 )
+              ),
+              column(
+                12,
+                style="margin-top: 1em",
+                shinycssloaders::withSpinner(
+                  DT::dataTableOutput("tb_gene_search"),
+                  size = 0.5,
+                  type = 1,
+                  color.background = "white"
+                )
+              )
             )
-        ),
+          ),
+          div(
+            id = "plots_sec1",
+            # fluidRow(
+            # Row 1 ----
+            # sidebarPanel(
+            column(
+              6,
+              shinycssloaders::withSpinner(plotlyOutput("fig.barTissue"), size = 1, type = 1, color.background = "white")
+            ),
+            column(
+              3,
+              shinycssloaders::withSpinner(plotlyOutput("fig.pieType_am"), size = 0.5, type = 1, color.background = "white")
+            ),
+            column(
+              3,
+              shinycssloaders::withSpinner(plotlyOutput("fig.pieType_ndamage"), size = 0.5, type = 1, color.background = "white")
+            ),
+            # Row 2 ----
+            column(
+              12,
+              wellPanel(
+                column(
+                  12,
+                  p("CaRinDB integrated to AlphaFold Protein Structure Database:")
+                ),
+                br()
+              )
+            ),
+            column(
+              6,
+              shinycssloaders::withSpinner(plotlyOutput("fig.AF.barTissue"), size = 1, type = 1, color.background = "white")
+            ),
+            column(
+              3,
+              shinycssloaders::withSpinner(plotlyOutput("fig.AF.pieType_am"), size = 0.5, type=1, color.background = "white")
+            ),
+            column(
+              3,
+              shinycssloaders::withSpinner(plotlyOutput("fig.AF.pieType_ndamage"), size = 0.5, type=1, color.background = "white")
+            ),
+            column(
+              12,
+            ),
+          )
+        )
+      ),
+    ),
     # ==== Tab CaRinDB Variants ===============================================================
     tabPanel(
-      " CaRinDB", 
+      "CaRinDB",
       icon = icon("list-alt", lib = "glyphicon"),
-       fluidRow(
-           column(12, 
-                  wellPanel(
-                  p("Complete CaRinDB Variants with SNPs per Sampĺes.  ")
-                  )
+      style = "padding: 3em 0;",
+      fluidRow(
+        column(
+          12,
+          wellPanel(
+            p("Complete CaRinDB Variants with SNPs per Sampĺes.  ")
           )
-       ),
+        )
+      ),
       # Sidebar with a slider input for number of bins
       sidebarLayout(
         sidebarPanel(
@@ -102,111 +164,129 @@ ui <- fluidPage(theme = shinytheme("united"),
             options = list(
               `actions-box` = TRUE,
               size = 10,
-              `selected-text-format` = "count > 5"),
+              `selected-text-format` = "count > 5"
+            ),
             multiple = TRUE
           ),
-        conditionalPanel(
-          'input.tab_carindb === "Summary"',
-          # ==== BEGIN SubTab CaRinDB plots ===============================================================
-          #p("Aqui"),
-          # ==== END SubTab CaRinDB plots ===============================================================
-        ),
-        conditionalPanel(
-          'input.tab_carindb === "Custom plot"',
-          selectInput("num_var_1_DB", "x-axis", choices = c(not_sel)),
-          selectInput("num_var_2_DB", "y-axis", choices = c(not_sel)),
-          selectInput("fact_var_DB", "Factor Variable", choices = c(not_sel)),
-          br(),
-          actionButton("run_button_DB", "Run Analysis", icon = icon("play"))
-        ),
-        conditionalPanel(         
-          'input.tab_carindb === "Dataset"',
-            radioButtons("show_unique", 
-                         "Show", 
-                         choices = list("Unique samples" = "unique" , "All samples" = "all"),  
-                         selected = c("all"),
-                         inline = TRUE),
+          conditionalPanel(
+            'input.tab_carindb === "Summary"',
+            # ==== BEGIN SubTab CaRinDB plots ===============================================================
+            # p("Aqui"),
+            # ==== END SubTab CaRinDB plots ===============================================================
+          ),
+          conditionalPanel(
+            'input.tab_carindb === "Custom plot"',
+            selectInput("num_var_1_DB", "x-axis", choices = c(not_sel)),
+            selectInput("num_var_2_DB", "y-axis", choices = c(not_sel)),
+            selectInput("fact_var_DB", "Factor Variable", choices = c(not_sel)),
+            br(),
+            actionButton("run_button_DB", "Run Analysis", icon = icon("play"))
+          ),
+          conditionalPanel(
+            'input.tab_carindb === "Dataset"',
+            radioButtons("show_unique",
+              "Show",
+              choices = list("Unique samples" = "unique", "All samples" = "all"),
+              selected = c("all"),
+              inline = TRUE
+            ),
             pickerInput(
               inputId = "show_vars",
-              label = "Select columns in CaRinDB", 
+              label = "Select columns in CaRinDB",
               choices = names(CaRinDB),
               selected = names(CaRinDB)[c(1:9)],
               options = list(
                 `actions-box` = TRUE,
                 `selected-text-format` = "count > 5",
-                size = 10), 
+                size = 10
+              ),
               multiple = TRUE
             ),
-          icon("cog", lib = "glyphicon"),                                           
-          em( "Use ",
-              a("regex", href="misc/cheatsheets_regex.pdf", target="_blank"), 
+            icon("cog", lib = "glyphicon"),
+            em(
+              "Use ",
+              a("regex", href = "https://en.wikipedia.org/wiki/Regular_expression", target = "_blank"),
               " to search in datatables."
+            ),
+            br(),
+            verbatimTextOutput(outputId = "res")
           ),
-          br(),
-            verbatimTextOutput(outputId = "res")             
-        ),
-        width = 3 
+          width = 3
         ),
         mainPanel(
           tabsetPanel(
-            id = 'tab_carindb',
-            tabPanel("Plots",
-                     p(HTML(paste0("Plots of selected tissues: ", textOutput("res_tissues", inline = T), "."))),
-                     # Row 1 ----                     
-                     column(6,
-                            shinycssloaders::withSpinner(plotlyOutput("fig.bar.NdamageTotMut"), size = 0.5, type=1, color.background = "white")
-                     ),
-                     column(6,
-                            shinycssloaders::withSpinner(plotlyOutput("fig.barInterResTotMut"), size = 0.5, type=1, color.background = "white")
-                     ),
-                     # Row 2 ----
-                     column(4,
-                            shinycssloaders::withSpinner(plotlyOutput("fig.Betweenness"), size = 0.5, type=1, color.background = "white")
-                     ),
-                     column(4,
-                            shinycssloaders::withSpinner(plotlyOutput("fig.bFactor"), size = 0.5, type=1, color.background = "white")
-                     ),
-                     column(4,
-                            shinycssloaders::withSpinner(plotlyOutput("fig.bar.deleteriaTotMut"), size = 0.5, type=1, color.background = "white")
-                     ),
-                     column(12,
-                            br(br()))
+            id = "tab_carindb",
+            tabPanel(
+              "Summary",
+              p("Summary description of selected tissues."),
+              column(
+                12,
+                shinycssloaders::withSpinner(htmlOutput("summary_CaRinDB"),
+                                             size = 0.5, type = 1,
+                                             color.background = "white"
+                )
+              )
             ),
-            tabPanel("Dataset",
-                     downloadButton("downloadDB", "all data"),
-                     shinycssloaders::withSpinner(DT::dataTableOutput("tb_CaRinDB"), size = 0.5, type=1, color.background = "white")
+            tabPanel(
+              "Plots",
+              p(HTML(paste0("Plots of selected tissues: ", textOutput("res_tissues", inline = T), "."))),
+              # Row 1 ----
+              column(
+                6,
+                shinycssloaders::withSpinner(plotlyOutput("fig.bar.NdamageTotMut"), size = 0.5, type = 1, color.background = "white")
+              ),
+              column(
+                6,
+                shinycssloaders::withSpinner(plotlyOutput("fig.barInterResTotMut"), size = 0.5, type = 1, color.background = "white")
+              ),
+              # Row 2 ----
+              column(
+                4,
+                shinycssloaders::withSpinner(plotlyOutput("fig.Betweenness"), size = 0.5, type = 1, color.background = "white")
+              ),
+              column(
+                4,
+                shinycssloaders::withSpinner(plotlyOutput("fig.bFactor"), size = 0.5, type = 1, color.background = "white")
+              ),
+              column(
+                4,
+                shinycssloaders::withSpinner(plotlyOutput("fig.bar.deleteriaTotMut"), size = 0.5, type = 1, color.background = "white")
+              ),
+              column(
+                12,
+                br(br())
+              )
+            ),
+            tabPanel(
+              "Dataset",
+              downloadButton("downloadDB", "all data"),
+              shinycssloaders::withSpinner(DT::dataTableOutput("tb_CaRinDB"), size = 0.5, type = 1, color.background = "white")
             ),
             tabPanel(
               title = "Custom plot",
               plotOutput("plot_DB")
-            ),
-            tabPanel("Summary",
-                     p("Summary description of selected tissues."),
-                     column(12,
-                            shinycssloaders::withSpinner(htmlOutput("summary_CaRinDB"),
-                                                         size = 0.5, type=1, 
-                                                         color.background = "white")
-                     )
             )
-        ),
-        width = 9
-      )
-    )
-  ),
-  
-  # ==== Tab CaRinDB::AlphaFold Variants ===============================================================
-  tabPanel(
-    'CaRinDB::AlphaFold',
-    icon = icon("list-alt", lib = "glyphicon"),
-    fluidRow(
-      column(12,
-             wellPanel(
-               p("Complete CaRinDB Variants integrated to AlphaFold Protein Structure Database.")
-             )
+          ),
+          width = 9
+        )
       )
     ),
-    # ===============================================================    
-#       # Sidebar - CaRinAF
+
+    # ==== Tab CaRinDB::AlphaFold Variants ===============================================================
+    tabPanel(
+      "CaRinDB::AlphaFold",
+      icon = icon("list-alt", lib = "glyphicon"),
+      style = "padding: 3em 0;",
+      fluidRow(
+        column(
+          12,
+          wellPanel(
+            p("Complete CaRinDB Variants integrated to AlphaFold Protein Structure Database.")
+          )
+        )
+      ),
+      # ===============================================================
+      #       # Sidebar - CaRinAF
       sidebarLayout(
         sidebarPanel(
           pickerInput(
@@ -217,12 +297,13 @@ ui <- fluidPage(theme = shinytheme("united"),
             options = list(
               `actions-box` = TRUE,
               size = 10,
-              `selected-text-format` = "count > 5"),
+              `selected-text-format` = "count > 5"
+            ),
             multiple = TRUE
           ),
           conditionalPanel(
             'input.tab_carindbAF === "Summary"',
-            #p("Summary sidebar.")
+            # p("Summary sidebar.")
           ),
           conditionalPanel(
             'input.tab_carindbAF === "Custom plot"',
@@ -233,12 +314,13 @@ ui <- fluidPage(theme = shinytheme("united"),
             actionButton("run_button_AF", "Run Analysis", icon = icon("play"))
           ),
           conditionalPanel(
-          'input.tab_carindbAF === "Dataset"',
+            'input.tab_carindbAF === "Dataset"',
             radioButtons("show_unique_AF",
-                         "Show",
-                         choices = list("Unique rows" = "unique" , "All rows" = "all"),
-                         selected = c("all"),
-                         inline = TRUE),
+              "Show",
+              choices = list("Unique rows" = "unique", "All rows" = "all"),
+              selected = c("all"),
+              inline = TRUE
+            ),
             pickerInput(
               inputId = "show_vars_AF",
               label = "Select columns in CaRinDB::AlphaFold",
@@ -246,67 +328,163 @@ ui <- fluidPage(theme = shinytheme("united"),
               selected = names(CaRinAF)[c(1:9)],
               options = list(
                 `actions-box` = TRUE,
-                `selected-text-format` = "count > 5"),
+                `selected-text-format` = "count > 5"
+              ),
               multiple = TRUE
             ),
             icon("cog", lib = "glyphicon"),
-            em( "Use ",
-                a("regex", href="misc/cheatsheets_regex.pdf", target="_blank"),
-                " to search in datatables."
+            em(
+              "Use ",
+              a("regex", href = "misc/cheatsheets_regex.pdf", target = "_blank"),
+              " to search in datatables."
             ),
             br(),
             verbatimTextOutput(outputId = "res_AF")
           ),
-        width = 3
-          ),
+          width = 3
+        ),
         mainPanel(
           tabsetPanel(
-            id = 'tab_carindbAF',
-            tabPanel("Plots",
-                     p(HTML(paste0("Plots of selected tissues: ", textOutput("res_tissues_AF", inline = T), "."))),
-                     # Row 1 ----
-                     column(6,
-                            shinycssloaders::withSpinner(plotlyOutput("fig.AF.bar.NdamageTotMut"), size = 0.5, type=1, color.background = "white")
-                     ),
-                     column(6,
-                            shinycssloaders::withSpinner(plotlyOutput("fig.AF.bar.InterResTotMut"), size = 0.5, type=1, color.background = "white")
-                     ),
-                     # Row 2 ----
-                     column(4,
-                            shinycssloaders::withSpinner(plotlyOutput("fig.AF.Betweenness"), size = 0.5, type=1, color.background = "white")
-                     ),
-                     column(4,
-                            shinycssloaders::withSpinner(plotlyOutput("fig.AF.pLDDT"), size = 0.5, type=1, color.background = "white")
-                     ),
-                     column(4,
-                            shinycssloaders::withSpinner(plotlyOutput("fig.AF.bar.deleteriaTotMut"), size = 0.5, type=1, color.background = "white")
-                            
-                     ),
-                     column(12,
-                            br(br()))
+            id = "tab_carindbAF",
+            tabPanel(
+              "Summary",
+              # Row 3 ----
+              p("Summary description of selected tissues."),
+              column(
+                12,
+                shinycssloaders::withSpinner(htmlOutput("summary_CaRinAF"),
+                                             size = 0.5, type = 1,
+                                             color.background = "white"
+                )
+              )
             ),
-            tabPanel("Dataset",
-                     downloadButton("downloadAF", "all data"),
-                     shinycssloaders::withSpinner(DT::dataTableOutput("tb_CaRinAF"), size = 0.5, type=1, color.background = "white")
+            tabPanel(
+              "Plots",
+              p(HTML(paste0("Plots of selected tissues: ", textOutput("res_tissues_AF", inline = T), "."))),
+              # Row 1 ----
+              column(
+                6,
+                shinycssloaders::withSpinner(plotlyOutput("fig.AF.bar.NdamageTotMut"), size = 0.5, type = 1, color.background = "white")
+              ),
+              column(
+                6,
+                shinycssloaders::withSpinner(plotlyOutput("fig.AF.bar.InterResTotMut"), size = 0.5, type = 1, color.background = "white")
+              ),
+              # Row 2 ----
+              column(
+                4,
+                shinycssloaders::withSpinner(plotlyOutput("fig.AF.Betweenness"), size = 0.5, type = 1, color.background = "white")
+              ),
+              column(
+                4,
+                shinycssloaders::withSpinner(plotlyOutput("fig.AF.pLDDT"), size = 0.5, type = 1, color.background = "white")
+              ),
+              column(
+                4,
+                shinycssloaders::withSpinner(plotlyOutput("fig.AF.bar.deleteriaTotMut"), size = 0.5, type = 1, color.background = "white")
+              ),
+              column(
+                12,
+                br(br())
+              )
+            ),
+            tabPanel(
+              "Dataset",
+              downloadButton("downloadAF", "all data"),
+              shinycssloaders::withSpinner(DT::dataTableOutput("tb_CaRinAF"), size = 0.5, type = 1, color.background = "white")
             ),
             tabPanel(
               title = "Custom plot",
               plotOutput("plot_AF")
-            ),
-            tabPanel("Summary",
-                     # Row 3 ----                     
-                     p("Summary description of selected tissues."),
-                     column(12,
-                            shinycssloaders::withSpinner(htmlOutput("summary_CaRinAF"),
-                                                         size = 0.5, type=1, 
-                                                         color.background = "white")
-                     )
-            ),
+            )
           ),
           width = 9
         )
       )
+    ),
+    # ==== Tab How To Use ===============================================================
+    tabPanel(
+      "How To Use",
+      icon = icon("question-sign", lib = "glyphicon"),
+      style = "padding: 3em 0;",
+      fluidRow(
+        column(
+          12,
+          wellPanel(
+            style = "text-align: center;",
+            h2("How to Use CaRinDB"),
+            p("Watch the video below for a simple tutorial on how to use our platform."),
+            HTML('<iframe width="860" height="515" src="https://www.youtube.com/embed/fCd6B5HRaZ8?si=xxFB1T7pBQ7VBnSu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>')
+          )
+        )
+      ),
+    ),
+    # ==== Tab About ===============================================================
+    tabPanel(
+      "About",
+      icon = icon("align-left", lib = "glyphicon"),
+      style = "padding: 3em 0;",
+      fluidRow(
+        column(
+          6,
+          wellPanel(
+            h4(HTML("<b>Data Sources</b>")),
+            p("Sit in ipsum qui quod quae ducimus sint. Id in at consequatur voluptatem.")
+          )
+        ),
+        column(
+          6,
+          wellPanel(
+            h4(HTML("<b>Citation</b>")),
+            h5(HTML(
+              "<i># If you have used CaRinDB for your research, please cite:</i>"
+            )),
+            p("Sit in ipsum qui quod quae ducimus sint. Id in at consequatur voluptatem."),
+            h5("Affiliations"),
+            HTML(
+              paste0(
+                tags$sup("1"),
+                "Bioinformatics Multidisciplinary Environment - BioME, Federal University of Rio Grande do Norte - UFRN, Brazil"
+              )
+            ),
+            br(),
+            HTML(paste0(
+              tags$sup("2"), "Digital Metropolis Institute, UFRN, Brazil"
+            )),
+            br(),
+            HTML(paste0(
+              tags$sup("3"), "Department of Biochemistry, UFRN, Brazil"
+            )),
+            br(),
+            br(),
+            h4(HTML("<b>Contact</b>")),
+            p("Iure iusto dolorem expedita quidem labore.
+              Sint qui labore doloribus et incidunt voluptatum velit adipisci.
+              Repudiandae occaecati architecto nobis iure."),
+          )
+        )
+      ),
+      fluidRow(
+        column(
+          4,
+          wellPanel(
+            h4(HTML("<b>License</b>")),
+            p("Sit in ipsum qui quod quae ducimus sint. Id in at consequatur voluptatem.")
+          )
+        ),
+        column(
+          8,
+          wellPanel(
+            h4(HTML("<b>Data Dictionary</b>")),
+            tags$iframe(src = 'CaRinDB - Data dictionary.html',
+                        width = '100%', height = '400px',
+                        frameborder = 0, scrolling = 'auto'
+            )
+          )
+        )
+      )
     )
-  )
+  ),
+  div("BioME/IMD/UFRN, EvoMol-Lab, The authors would like to thank CAPES.",
+      style = "position: fixed;left: 0;bottom: 0;width: 100%;background-color: #e95420;color: white;text-align: center;padding:0.5em 0;")
 )
-
