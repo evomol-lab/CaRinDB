@@ -201,7 +201,9 @@ CaRinDB <- CaRinDB %>%
 CaRinDB <- CaRinDB %>%
   dplyr::mutate(am_class = ifelse(is.na(am_class), "unclassified", am_class))
 
-tissues <- unique(CaRinDB$Tissue)
+tissue_dictionary <- read.csv("data/tissue_dictionary.csv")
+tissues <- unique(tissue_dictionary$tissue)
+names(tissues) <- paste0(unique(tissue_dictionary$full_name), " (", tissues, ")")
 
 # AM Class color pallette
 am_class_palette <- c(
@@ -233,7 +235,8 @@ CaRinAF <- CaRinAF %>%
 CaRinAF <- CaRinAF %>%
   dplyr::mutate(am_class = ifelse(is.na(am_class), "unclassified", am_class))
 
-tissues_AF <- unique(CaRinAF$Tissue)
+tissues_AF <- unique(tissue_dictionary$tissue)
+names(tissues_AF) <- paste0(unique(tissue_dictionary$full_name), " (", tissues_AF, ")")
 
 callback <- JS(
   "var a = document.createElement('a');",
