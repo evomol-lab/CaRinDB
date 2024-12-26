@@ -160,7 +160,7 @@ ui <- fluidPage(
         column(
           12,
           wellPanel(
-            p("Complete CaRinDB Variants with SNPs per Sampĺes.  ")
+            p("Complete CaRinDB Variants with SNPs per Samples.  ")
           )
         )
       ),
