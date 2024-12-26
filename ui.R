@@ -56,9 +56,17 @@ ui <- fluidPage(
                 h1(style = "margin: 0 0.2em", "CaRinDB")
               ),
               p(
-                "CaRinDB is an integrated database of Cancer Mutations, Residue Interaction Networks and AlphaFold Protein Structure Database."
+                "CaRinDB is an interactive database designed to streamline cancer mutation research by integrating data from The Cancer Genome Atlas (TCGA) and advanced structural analysis tools, along with advanced effect predictions and molecular features such as Residue Interaction Networks (RINs) derived from Protein Data Bank experimental structures and AlphaFoldDB computational models. Covering 33 distinct cancer types, CaRinDB offers a broad spectrum of insights into cancer mutation dynamics."
               ),
-              p("It allows the exploration of...."),
+              p(
+                "This platform allows users to extract, visualize, and interactively explore diverse mutations through an intuitive interface, evaluate their structural impact."
+              ),
+              p(
+                "CaRinDB provides a curated dataset featuring residue connectivity metrics, allele frequencies, references to biological databases, and functional predictions from 22 distinct tools, making it a valuable resource for AI/ML-based research. CaRinDB is well suited for training AI and machine learning models, enabling breakthroughs in understanding the molecular basis of cancer and its clinical implications, such as precision medicine and therapeutic target discovery."
+              ),
+              p(
+                "Unlike existing tools, CaRinDB facilitates integration of polymorphism data with protein structural data and residue interaction networks, offering precision in mutation analysis."
+              ),              
               radioButtons(
                 "db_source",
                 "Database:",
@@ -429,7 +437,7 @@ ui <- fluidPage(
           6,
           wellPanel(
             h4(HTML("<b>Data Sources</b>")),
-            p("Sit in ipsum qui quod quae ducimus sint. Id in at consequatur voluptatem.")
+            p("The construction of the databases available in **CaRinDB** involved numerous public data repositories: [National Cancer Institute - GDC Data Portal](https://portal.gdc.cancer.gov/repository), missense mutations were annotated in [ANNOVAR](https://annovar.openbioinformatics.org/en/latest/user-guide/download/), [SnpEFF](https://pcingola.github.io/SnpEff/), [NCBI - National Center for Biotechnology Information](https://www.ncbi.nlm.nih.gov/), [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/), [Uniprot](https://www.uniprot.org/uploadlists), [PDB - Protein Data Bank](https://www.rcsb.org/). Residue interaction network data was obtained through the [RING](https://ring.biocomputingup.it/submit) program, 3D protein structure predictions were also obtained from [Alphafold](https://alphafold.ebi.ac.uk/), and predictions to verify the pathogenicity of mutations were also obtained from [AlphaMissense](https://alphamissense.hegelab.org/).")
           )
         ),
         column(
@@ -458,9 +466,7 @@ ui <- fluidPage(
             br(),
             br(),
             h4(HTML("<b>Contact</b>")),
-            p("Iure iusto dolorem expedita quidem labore.
-              Sint qui labore doloribus et incidunt voluptatum velit adipisci.
-              Repudiandae occaecati architecto nobis iure."),
+            p("The CaRinDB team is available to assist users who want to import their data on demand. If you have some question, feedback, or request"),
           )
         )
       ),
@@ -469,7 +475,7 @@ ui <- fluidPage(
           4,
           wellPanel(
             h4(HTML("<b>License</b>")),
-            p("Sit in ipsum qui quod quae ducimus sint. Id in at consequatur voluptatem.")
+            p("Data contained within the CaRinDB Database is provided for non-commercial research.")
           )
         ),
         column(
