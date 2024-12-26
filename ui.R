@@ -55,8 +55,10 @@ ui <- fluidPage(
                 img(src = "favicon.png", align = "left", width = "40px"),
                 h1(style = "margin: 0 0.2em", "CaRinDB")
               ),
+              fluidRow(
+                style = "place-items: center;text-align:justify",
               p(
-                "CaRinDB is an interactive database designed to streamline cancer mutation research by integrating data from The Cancer Genome Atlas (TCGA) and advanced structural analysis tools, along with advanced effect predictions and molecular features such as Residue Interaction Networks (RINs) derived from Protein Data Bank experimental structures and AlphaFoldDB computational models. Covering 33 distinct cancer types, CaRinDB offers a broad spectrum of insights into cancer mutation dynamics."
+                strong("CaRinDB")," is an interactive database designed to streamline cancer mutation research by integrating data from The Cancer Genome Atlas (TCGA) and advanced structural analysis tools, along with advanced effect predictions and molecular features such as Residue Interaction Networks (RINs) derived from Protein Data Bank experimental structures and AlphaFoldDB computational models. Covering 33 distinct cancer types, CaRinDB offers a broad spectrum of insights into cancer mutation dynamics."
               ),
               p(
                 "This platform allows users to extract, visualize, and interactively explore diverse mutations through an intuitive interface, evaluate their structural impact."
@@ -66,6 +68,7 @@ ui <- fluidPage(
               ),
               p(
                 "Unlike existing tools, CaRinDB facilitates integration of polymorphism data with protein structural data and residue interaction networks, offering precision in mutation analysis."
+              )
               ),              
               radioButtons(
                 "db_source",
@@ -437,7 +440,24 @@ ui <- fluidPage(
           6,
           wellPanel(
             h4(HTML("<b>Data Sources</b>")),
-            p("The construction of the databases available in **CaRinDB** involved numerous public data repositories: [National Cancer Institute - GDC Data Portal](https://portal.gdc.cancer.gov/repository), missense mutations were annotated in [ANNOVAR](https://annovar.openbioinformatics.org/en/latest/user-guide/download/), [SnpEFF](https://pcingola.github.io/SnpEff/), [NCBI - National Center for Biotechnology Information](https://www.ncbi.nlm.nih.gov/), [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/), [Uniprot](https://www.uniprot.org/uploadlists), [PDB - Protein Data Bank](https://www.rcsb.org/). Residue interaction network data was obtained through the [RING](https://ring.biocomputingup.it/submit) program, 3D protein structure predictions were also obtained from [Alphafold](https://alphafold.ebi.ac.uk/), and predictions to verify the pathogenicity of mutations were also obtained from [AlphaMissense](https://alphamissense.hegelab.org/).")
+            p("The construction of the databases available in", strong("CaRinDB"), "involved numerous public data repositories:",
+            a(href = "https://portal.gdc.cancer.gov/repository", target = "_blank", "National Cancer Institute - GDC Data Portal"),
+            ", missense mutations were annotated in ",
+            a(href = "https://annovar.openbioinformatics.org/en/latest/user-guide/download/", target = "_blank", "ANNOVAR"), ", ",
+            a(href = "https://pcingola.github.io/SnpEff/", target = "_blank", "SnpEFF"), ", ",
+            a(href = "https://www.ncbi.nlm.nih.gov/", target = "_blank", "NCBI - National Center for Biotechnology Information"), ", ",
+            a(href = "https://www.ncbi.nlm.nih.gov/clinvar/", target = "_blank", "ClinVar"), ", ",
+            a(href = "https://www.uniprot.org/uploadlists", target = "_blank", "Uniprot"), ", and ",
+            a(href = "https://www.rcsb.org/", target = "_blank", "PDB - Protein Data Bank"),".",
+            "Residue interaction network data was obtained through the ",
+            a(href = "https://ring.biocomputingup.it/submit", target = "_blank", "RING"), " program.",
+            "3D protein structure predictions were also obtained from ",
+            a(href = "https://alphafold.ebi.ac.uk/", target = "_blank", "Alphafold"), ".",
+            "Predictions to verify the pathogenicity of mutations were also obtained from ",
+            a(href = "https://alphamissense.hegelab.org/", target = "_blank", "AlphaMissense"), ".")
+            #p("The construction of the databases available in **CaRinDB** involved numerous public data repositories: 
+            #[National Cancer Institute - GDC Data Portal](https://portal.gdc.cancer.gov/repository), missense mutations were annotated in [ANNOVAR]
+            #(https://annovar.openbioinformatics.org/en/latest/user-guide/download/), [SnpEFF](https://pcingola.github.io/SnpEff/), [NCBI - National Center for Biotechnology Information](https://www.ncbi.nlm.nih.gov/), [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/), [Uniprot](https://www.uniprot.org/uploadlists), [PDB - Protein Data Bank](https://www.rcsb.org/). Residue interaction network data was obtained through the [RING](https://ring.biocomputingup.it/submit) program, 3D protein structure predictions were also obtained from [Alphafold](https://alphafold.ebi.ac.uk/), and predictions to verify the pathogenicity of mutations were also obtained from [AlphaMissense](https://alphamissense.hegelab.org/).")
           )
         ),
         column(
