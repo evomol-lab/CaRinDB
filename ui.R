@@ -2,6 +2,7 @@
 not_sel <- "Not Selected"
 # ==== ui.R ===============================================================
 ui <- fluidPage(
+  use_cicerone(),
   theme = shinytheme("united"),
   tags$head(
     tags$style(
@@ -41,7 +42,9 @@ ui <- fluidPage(
     position = "fixed-top",
     # ==== Tab CaRinDB ===============================================================
     tabPanel(
-      icon("home", lib = "glyphicon"), # Home
+      "Home",
+      id = 'home',
+      icon = icon("home", lib = "glyphicon"), # Home
       fluidRow(
         style = "padding: 3em 0;",
         div(
@@ -68,7 +71,9 @@ ui <- fluidPage(
               ),
               p(
                 "Unlike existing tools, CaRinDB facilitates integration of polymorphism data with protein structural data and residue interaction networks, offering precision in mutation analysis."
-              )
+              ),
+              br(),
+              actionButton("guide", " Run guided tour", icon = icon("info-sign", lib = "glyphicon"))
               ),              
               radioButtons(
                 "db_source",
@@ -229,7 +234,7 @@ ui <- fluidPage(
             id = "tab_carindb",
             tabPanel(
               "Summary",
-              p("Summary description of selected tissues."),
+              p("Summary description of selected tissues.", id ="carindb_summary"),
               column(
                 12,
                 shinycssloaders::withSpinner(htmlOutput("summary_CaRinDB"),
@@ -240,7 +245,7 @@ ui <- fluidPage(
             ),
             tabPanel(
               "Plots",
-              p(HTML(paste0("Plots of selected tissues: ", textOutput("res_tissues", inline = T), "."))),
+              p(HTML(paste0("Plots of selected tissues: ", textOutput("res_tissues", inline = T), ".")), id ="carindb_plots"),
               # Row 1 ----
               column(
                 6,
@@ -424,9 +429,23 @@ ui <- fluidPage(
           wellPanel(
             style = "text-align: center;",
             h2("How to Use CaRinDB"),
-            p("Watch the video below for a simple tutorial on how to use our platform."),
-            HTML('<iframe width="860" height="515" src="https://www.youtube.com/embed/fCd6B5HRaZ8?si=xxFB1T7pBQ7VBnSu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>')
-          )
+            fluidRow(
+              style = "place-items: center;text-align:justify",
+              HTML("<p>The first menu (<strong>Home</strong>) contains a general summary  of both DB and DB::AlphaFold datasets accessible through the portal.</p>
+                    <p>The main graph shows the number of mutations separated by type of cancer, and the pie chart shows the percentage of mutations classified according to the AlphaMissense class and the NDamage parameter, which represents the number of computational predictors that consider a particular mutation as deleterious.</p>
+                    <p>Users can also search the database using specific Gene Symbols.</p>
+                    <p>The second and third menus provide specific and interactive access to the <strong>CaRinDB</strong> and <strong>CaRinDB::AlphaFold</strong> datasets, respectively. Here, users can perform data mining and generate insights for their research. This entire analysis can be performed for all 33 tissues, or for a specific tissue.</p>
+                    <p>The <strong>Summary</strong> tab provides a summary description of all attributes (columns) of the dataset.</p>
+                    <p>Upon clicking the <strong>Plots</strong> tab, the user can visualize a set of graphs regarding some key database features. They are: the number of mutations versus N DamageCalc (Number of predictors that classified this mutation as damaging), the number of mutations versus Inter_Res_Tot (Total residue-residue interactions), the number of mutations versus Betweenness Weighted (RIN parameter), the number of mutations versus the B-factor (RIN parameter) or pLDDT (AlphaFold parameter) of the present residue, and the number of mutations versus the classes of deleterious mutations.</p>
+                    <p>The next tab (<strong>Dataset</strong>) is a web visualization of the table with the selected mutation data. Users can choose the fields/columns and types of cancer from the menu on the right. A small description of each item is shown next to each name. The table presents direct links with other information sources such as GeneCards, dbSNP, NCBI, Uniprot, and PDB/AlphaFoldDB. The panel on the left side allows users to filter on any of the provided columns using plain text and regular expressions.  Recovered results can be downloaded as CSV or PDF formatted files (all pages or current page only), through specific buttons.</p>
+                    <p>In the last tab (<strong>Custom plot</strong>), the user can explore the data in customized plots for specific or all types of cancer. The user can determine the plot's structure according to their parameters selection included in the x and y axes and the factor variable.</p>")
+              ),
+            p("Run our guided tour on Home  how to use our platform."),
+            actionButton("guide", "Run guided tour", icon = icon("info-sign", lib = "glyphicon")),
+            br(),br(),
+            #p("Watch the video below for a simple explanation on the AlphaMissense predictions integrated to CaRinDB."),            
+            #HTML('<iframe width="860" height="515" src="https://www.youtube.com/embed/fCd6B5HRaZ8?si=xxFB1T7pBQ7VBnSu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>')
+           )
         )
       ),
     ),
@@ -467,26 +486,40 @@ ui <- fluidPage(
             h5(HTML(
               "<i># If you have used CaRinDB for your research, please cite:</i>"
             )),
-            p("Sit in ipsum qui quod quae ducimus sint. Id in at consequatur voluptatem."),
-            h5("Affiliations"),
+            
+            p(strong("CaRinDB: An integrated database of common cancer mutations and residue interaction network parameters."), 
+              "Daniela Coelho Batista Guedes Pereira", tags$sup("1,2"),",",
+              "João Vitor Ferreira Cavalcante", tags$sup("1"),",", 
+              "Raul Maia Falcão",tags$sup("1"),",",
+              "Jorge Estefano Santana de Souza",tags$sup("1"),",",
+              "Rodrigo Juliani Siqueira Dalmolin", tags$sup("1"),",",
+              "Gustavo Antônio de Souza", tags$sup("1"),",",
+              "Thaís Gaudencio do Rêgo", tags$sup("1,2"),",",
+              "Patrick Terrematte", tags$sup("1,2"),",",
+              "and João Paulo Matos Santos Lima",tags$sup("1,3"),",",
+              strong("To be published.")),
+            h5(strong("Affiliations")),
             HTML(
               paste0(
                 tags$sup("1"),
-                "Bioinformatics Multidisciplinary Environment - BioME, Federal University of Rio Grande do Norte - UFRN, Brazil"
+                " Bioinformatics Multidisciplinary Environment (BioME),  Digital Metropolis Institute (IMD), Federal University of Rio Grande do Norte (UFRN), Brazil."
               )
             ),
             br(),
             HTML(paste0(
-              tags$sup("2"), "Digital Metropolis Institute, UFRN, Brazil"
+              tags$sup("2"), " Centro de Informática, Universidade Federal da Paraíba (UFPB), João Pessoa, PB, Brazil."
             )),
             br(),
             HTML(paste0(
-              tags$sup("3"), "Department of Biochemistry, UFRN, Brazil"
+              tags$sup("3"), " Institute of Tropical Medicine (IMT), UFRN, Natal, RN, Brazil"
             )),
             br(),
             br(),
             h4(HTML("<b>Contact</b>")),
-            p("The CaRinDB team is available to assist users who want to import their data on demand. If you have some question, feedback, or request"),
+            p("The CaRinDB team is available to assist users who want to import their data on demand. If you have some question, feedback, or request, contact the ",
+              "Corresponding author:", br(),
+              "João Paulo Matos Santos Lima (jpmslima [at] imd.ufrn.br)"
+              ),
           )
         )
       ),

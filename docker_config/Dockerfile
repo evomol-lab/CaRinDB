@@ -4,7 +4,7 @@ FROM rocker/shiny-verse:latest
 RUN apt-get update && apt-get install -y \
     sudo \
     pandoc \
-    pandoc-citeproc \
+    #pandoc-citeproc \
     libcurl4-gnutls-dev \
     libcairo2-dev \
     libxt-dev \
@@ -33,6 +33,7 @@ RUN R -e "remotes::install_github('dcomtois/summarytools', ref = '0-8-9')"
 #RUN R -e "remotes::install_github('dcomtois/summarytools', ref = 'dev-current')"
 #RUN R -e "remotes::install_github('dcomtois/summarytools', ref = 'no-x11-check')"
 #RUN R -e "install.packages('cicerone', repos='http://cran.rstudio.com/')"
+RUN R -e "remotes::install_github('JohnCoene/cicerone@v1.0.4')"
 
 RUN mkdir -p /srv/CaRinDB/CaRinDB
 

@@ -3,7 +3,41 @@ server <- function(input, output, session) {
   # suppress warnings
   storeWarn <- getOption("warn")
   options(warn = -1)
-
+  
+  
+  guide <- Cicerone$
+    new()$
+    step(
+      #"home",
+      el = "[data-value='Home']",
+      title = "Summary of CaRinDB",
+      description = "<p>The first menu (Home) contains a general summary  of both DB and DB::AlphaFold datasets accessible through the portal.</p>
+    <p>The main graph shows the number of mutations separated by type of cancer, and the pie chart shows the percentage of mutations classified according to the AlphaMissense class and the NDamage parameter, which represents the number of computational predictors that consider a particular mutation as deleterious.</p>
+    <p>Users can also search the database using specific Gene Symbols.</p>",
+      is_id = FALSE,
+      #tab = "home",
+      #tab_id = "home",
+      position = "bottom"
+    )$
+    step(
+      #el = "CaRinDB",
+      el = "[data-value='CaRinDB']",
+      title = "CaRinDB and CaRinDB::AlphaFold",
+      description = "<p>The second and third menus provide specific and interactive access to the <strong>CaRinDB</strong> and <strong>CaRinDB::AlphaFold</strong> datasets, respectively. Here, users can perform data mining and generate insights for their research. This entire analysis can be performed for all 33 tissues, or for a specific tissue.</p>
+    <p>The <strong>Summary</strong> tab provides a summary description of all attributes (columns) of the dataset.</p>
+    <p>Upon clicking the <strong>Plots</strong> tab, the user can visualize a set of graphs regarding some key database features. They are: the number of mutations versus N DamageCalc (Number of predictors that classified this mutation as damaging), the number of mutations versus Inter_Res_Tot (Total residue-residue interactions), the number of mutations versus Betweenness Weighted (RIN parameter), the number of mutations versus the B-factor (RIN parameter) or pLDDT (AlphaFold parameter) of the present residue, and the number of mutations versus the classes of deleterious mutations.</p>
+    <p>The next tab (<strong>Dataset</strong>) is a web visualization of the table with the selected mutation data. Users can choose the fields/columns and types of cancer from the menu on the right. A small description of each item is shown next to each name. The table presents direct links with other information sources such as GeneCards, dbSNP, NCBI, Uniprot, and PDB/AlphaFoldDB. The panel on the left side allows users to filter on any of the provided columns using plain text and regular expressions.  Recovered results can be downloaded as CSV or PDF formatted files (all pages or current page only), through specific buttons.</p>
+    <p>In the last tab (<strong>Custom plot</strong>), the user can explore the data in customized plots for specific or all types of cancer. The user can determine the plot's structure according to their parameters selection included in the x and y axes and the factor variable.</p>",
+      is_id = FALSE,
+      #is_id = TRUE,
+      position = 'bottom'
+    )
+  
+  guide$init()$start()
+  
+  observeEvent(input$guide, {
+     guide$start()
+   })
   # B - Buttons Bfrtip
   # l - Length changing input control
   # f - Filtering input
