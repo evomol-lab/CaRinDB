@@ -279,7 +279,7 @@ filter_grouped_choices <- function(data, choice_list) {
 
   # Filter the choice list to keep only valid column names in each group
   filtered_list <- lapply(choice_list, function(group) {
-    intersect(group, valid_colnames)
+    sort(intersect(group, valid_colnames))
   })
 
   # Remove any groups that became empty after filtering and return the result
