@@ -64,7 +64,7 @@ ui <- fluidPage(
                 strong("CaRinDB")," is an interactive database designed to streamline cancer mutation research by integrating data from The Cancer Genome Atlas (TCGA) and advanced structural analysis tools, along with advanced effect predictions and molecular features such as Residue Interaction Networks (RINs) derived from Protein Data Bank experimental structures and AlphaFoldDB computational models. Covering 33 distinct cancer types, CaRinDB offers a broad spectrum of insights into cancer mutation dynamics."
               ),
               p(
-                "This platform allows users to extract, visualize, and interactively explore diverse mutations through an intuitive interface, evaluate their structural impact."
+                "This platform allows users to extract, visualize, and interactively explore diverse mutations through an intuitive interface, and allows for evaluation of their structural impact."
               ),
               p(
                 "CaRinDB provides a curated dataset featuring residue connectivity metrics, allele frequencies, references to biological databases, and functional predictions from 22 distinct tools, making it a valuable resource for AI/ML-based research. CaRinDB is well suited for training AI and machine learning models, enabling breakthroughs in understanding the molecular basis of cancer and its clinical implications, such as precision medicine and therapeutic target discovery."
