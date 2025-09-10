@@ -535,10 +535,7 @@ ui <- fluidPage(
           8,
           wellPanel(
             h4(HTML("<b>Data Dictionary</b>")),
-            tags$iframe(src = 'CaRinDB - Data dictionary.html',
-                        width = '100%', height = '400px',
-                        frameborder = 0, scrolling = 'auto'
-            )
+            DT::dataTableOutput("dt_data_dict"),
           )
         )
       )

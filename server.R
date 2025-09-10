@@ -846,6 +846,23 @@ server <- function(input, output, session) {
     draw_plot(data_input_AF(), num_var_1_AF(), num_var_2_AF(), fact_var_AF())
   })
 
+
+  output$dt_data_dict <- DT::renderDataTable(
+    {
+      DT::datatable(
+        data_dictionary %>% arrange(Attribute),
+        class = "cell-border stripe",
+        rownames = FALSE,
+        filter = "top",
+        extensions = c("Buttons", "ColReorder"),
+        options = list.options,
+        escape = FALSE
+      )
+    },
+    server = TRUE
+  )
+
+
   output$plot_DB <- renderPlot(plot_DB())
   output$plot_AF <- renderPlot(plot_AF())
 }

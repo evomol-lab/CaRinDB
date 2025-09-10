@@ -205,6 +205,7 @@ CaRinDB <- CaRinDB %>%
   dplyr::mutate(am_class = ifelse(is.na(am_class), "unclassified", am_class))
 
 tissue_dictionary <- read.csv("data/tissue_dictionary.csv")
+data_dictionary <- read.csv("data/data_dictionary.csv")
 tissues <- unique(tissue_dictionary$tissue)
 names(tissues) <- paste0(unique(tissue_dictionary$full_name), " (", tissues, ")")
 
