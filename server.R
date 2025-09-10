@@ -124,7 +124,7 @@ server <- function(input, output, session) {
     selectizeInput(
       "selectize_gene",
       label = "Type a gene symbol:",
-      choices = CaRinDB_genes,
+      choices = sort(CaRinDB_genes),
       width = "200px",
       multiple = TRUE,
       options = list(maxItems = 1)
