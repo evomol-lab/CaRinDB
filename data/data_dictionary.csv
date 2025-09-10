@@ -30,8 +30,8 @@ dbNSFP_MutationAssessor_pred,Information predicted by MutationAssessor,Possible 
 am_pathogenicity *,Pathogenicity score from AlphaMissense,Numerical values ranging from 0 to 1.
 am_class *,AlphaMissense mutation classification,Possible values: Ambiguous Benign Pathogenic
 VariantEffect_EFF,Classification of Single Nucleotide Polymorphism,"Possible values: NON_SYNONYMOUS_CODING NON_SYNONYMOUS_CODING+SPLICE_SITE_REGION NON_SYNONYMOUS_START SYNONYMOUS_CODING SPLICE_SITE_ACCEPTOR+INTRON START_LOST STOP_GAINED STOP_GAINED+SPLICE_SITE_REGION STOP_LOST, START_LOST STOP_LOST+SPLICE_SITE_REGION"
-Risco_Mut_EFF,Risk of mutation,"Possible values: MODERATE, HIGH, LOW"
-Tipo_Mut_EFF,Mutation Type,Possible values: MISSENSE NONSENSE SILENT
+Risk_Mut_EFF,Risk of mutation,"Possible values: MODERATE, HIGH, LOW"
+Type_Mut_EFF,Mutation Type,Possible values: MISSENSE NONSENSE SILENT
 Point_Mutation_EFF,Point of mutation at the codon,Format: aaG/aaT
 Changepr_F,A nomenclature that represents the change that occurs in a protein (source: https://archive.hgvsnomenclature.org/ ).,Formats: p.Pro609Ala p.Ser43* p.Ter327Argext*? p.Met1?
 changeProt_am,A nomenclature that represents the change that occurs in a protein,Format: G765V
