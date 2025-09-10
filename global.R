@@ -253,58 +253,25 @@ callback <- JS(
   "$('#downloadDB').hide();"
 )
 
-grouped_choices <- list(
-  `Mutation Identifiers` = c(
-    "CHROM", "POS", "REF", "OLD", "SNP_ID_COMMON", "Gene_EFF", "RefSeq_EFF", "Exon_EFF"
-  ),
-  `External Search` = c(
+create_choice_list <- function(file_path) {
+  attribute_df <- read.csv(
+    file = file_path,
+    header = TRUE,
+    fill = TRUE,
+    stringsAsFactors = FALSE,
+    check.names = FALSE
+  )
+  
+  choice_list <- lapply(attribute_df, function(column) {
+    column[!is.na(column) & column != ""]
+  })
+  
+  choice_list$`External Search` <- c(
     "Gene_search", "SNP_search", "RefSeq_search", "Uniprot_search", "AlphaFold_search"
-  ),
-  `Pathogenicity Predictions` = c(
-    "dbNSFP_DEOGEN2_pred", "dbNSFP_MetaSVM_pred", "dbNSFP_fathmmMKL_coding_pred",
-    "dbNSFP_PrimateAI_pred", "dbNSFP_PROVEAN_pred", "dbNSFP_MCAP_pred",
-    "dbNSFP_ClinPred_pred", "dbNSFP_BayesDel_addAF_pred", "dbNSFP_Polyphen2_HVAR_pred",
-    "dbNSFP_SIFT_pred", "dbNSFP_FATHMM_pred", "dbNSFP_SIFT4G_pred", "dbNSFP_LRT_pred",
-    "dbNSFP_fathmmXF_coding_pred", "dbNSFP_BayesDel_noAF_pred", "dbNSFP_Aloft_pred",
-    "dbNSFP_MutationTaster_pred", "dbNSFP_MetaLR_pred", "dbNSFP_LISTS2_pred",
-    "dbNSFP_Polyphen2_HDIV_pred", "dbNSFP_MutationAssessor_pred", "PolyPhen2_Dam_pred"
-  ),
-  `AlphaMissense Predictions` = c("am_pathogenicity", "am_class"),
-  `Allele Frequency` = c("dbNSFP_ExAC_AF", "dbNSFP_gnomAD_exomes_AF", "COMMON"),
-  `Mutation Effect Annotation` = c(
-    "VariantEffect_EFF", "Risk_Mut_EFF", "Type_Mut_EFF", "Point_Mutation_EFF",
-    "changecDNA_EFF", "poschangecDNA_EFF", "typechangecDNA_EFF", "Pos_Point_Mutation_EFF"
-  ),
-  `Protein Change` = c(
-    "Changepr_F", "changeProt_am", "aminBefore", "aminAfter", "poschangeProt",
-    "typechangeProt", "Blosum62"
-  ),
-  `Amino Acid Properties` = c(
-    "groupBefore", "groupAfter", "groupChange", "aminBeforeEssential",
-    "aminAfterEssential", "essencialChange"
-  ),
-  `Calculated Deleteriousness` = c(
-    "Ndamage", "NdamageCalc", "Deleterious", "Deleterious5", "Deleterious10",
-    "Deleterious11"
-  ),
-  `Structural Information` = c(
-    "Uniprot_id", "PDB_id", "Resolution", "Swiss-Prot", "pLDDT_Global",
-    "pLDDT_RING", "F_AF", "Interpro_domain"
-  ),
-  `Alignment Information` = c(
-    "db_align_beg", "db_align_end", "pdbx_auth_seq_align_beg", "pdbx_auth_seq_align_end",
-    "pdbx_strand_id", "seq_align_beg", "seq_align_end", "db_name",
-    "pdbx_align_begin", "len_seq"
-  ),
-  `Network Metrics` = c(
-    "NodeId_RING", "Dssp_RING", "Degree_RING", "Bfactor_CA_RING", "Inter_Lig_tot",
-    "Inter_Res_tot", "Inter_IAC_Lig_tot", "Inter_VDW_Lig_tot", "Inter_VDW_Res_tot",
-    "Inter_HBOND_Res_tot", "Inter_PIPISTACK_Res_tot", "Inter_IONIC_Res_tot",
-    "Inter_SSBOND_Res_tot", "Inter_PICATION_Res_tot", "triangles_node",
-    "clusteringCoef_node", "betweennessWeighted_node"
-  ),
-  `Miscellaneous` = c("substitution", "Tissue")
-)
+  )
+  
+  return(choice_list)
+}
 
 filter_grouped_choices <- function(data, choice_list) {
   # Get the actual column names from the input data frame
@@ -319,9 +286,12 @@ filter_grouped_choices <- function(data, choice_list) {
   return(filtered_list[sapply(filtered_list, length) > 0])
 }
 
-filtered_choices <- filter_grouped_choices(data = CaRinDB, choice_list = grouped_choices)
+choice_list <- create_choice_list("data/AtributosPorCategoria-CaRinDB.csv")
+choice_list_af <- create_choice_list("data/AtributosPorCategoria-CaRinAF.csv")
 
-filtered_choices_af <- filter_grouped_choices(data = CaRinAF, choice_list = grouped_choices)
+filtered_choices <- filter_grouped_choices(data = CaRinDB, choice_list = choice_list)
+
+filtered_choices_af <- filter_grouped_choices(data = CaRinAF, choice_list = choice_list_af)
 
 # summarytools::dfSummary(summarytools::dfSummary(CaRinDB, style="grid", method = "render"),
 #                    #varnumbers   = FALSE,
