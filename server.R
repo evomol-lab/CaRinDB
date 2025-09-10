@@ -55,6 +55,7 @@ server <- function(input, output, session) {
     paging = T,
     search = list(regex = TRUE),
     searchHighlight = TRUE,
+    scrollX = TRUE,
     colReorder = TRUE,
     orientation = "landscape", # <'col-md-2''dwnld'>
     dom = "<'row'<'col-md-3'l><'col-md-6'B><'col-md-3'f>><'row'<'col-md-12't>><'row'<'col-md-3'i><'col-md-1'><'col-md-8'p>>",
