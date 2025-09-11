@@ -9,7 +9,6 @@ CaRinDB2 <- vroom::vroom("data/PDB_Final.tsv",
 
 # names(df)[names(df) == 'old.var.name'] <- 'new.var.name'
 names(CaRinDB2)[names(CaRinDB2) == "Tecido"] <- "Tissue"
-names(CaRinDB2)[names(CaRinDB2) == "Tipo_Mut_EFF"] <- "Type_Mut_EFF"
 names(CaRinDB2)[names(CaRinDB2) == "Risco_Mut_EFF"] <- "Risc_Mut_EFF"
 names(CaRinDB1)[names(CaRinDB1) == "Deleterious"] <- "Deleteria"
 names(CaRinDB1)[names(CaRinDB1) == "Deleterious5"] <- "Deleteria5"

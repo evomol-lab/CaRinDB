@@ -209,14 +209,16 @@ ui <- fluidPage(
             pickerInput(
               inputId = "show_vars",
               label = "Select columns in CaRinDB",
-              choices = names(CaRinDB),
+              choices = filtered_choices,
               selected = names(CaRinDB)[c(1:9)],
-              options = list(
-                `actions-box` = TRUE,
-                `selected-text-format` = "count > 5",
-                size = 10
-              ),
-              multiple = TRUE
+              multiple = TRUE,
+              options = pickerOptions(
+                actionsBox = TRUE,
+                selectedTextFormat = "count > 5",
+                size = 15,
+                liveSearch = TRUE,
+                title = "Click to select variables..."
+              )
             ),
             icon("cog", lib = "glyphicon"),
             em(
@@ -340,13 +342,16 @@ ui <- fluidPage(
             pickerInput(
               inputId = "show_vars_AF",
               label = "Select columns in CaRinDB::AlphaFold",
-              choices = names(CaRinAF),
+              choices = filtered_choices_af,
               selected = names(CaRinAF)[c(1:9)],
-              options = list(
-                `actions-box` = TRUE,
-                `selected-text-format` = "count > 5"
-              ),
-              multiple = TRUE
+              multiple = TRUE,
+              options = pickerOptions(
+                actionsBox = TRUE,
+                selectedTextFormat = "count > 5",
+                size = 15,
+                liveSearch = TRUE,
+                title = "Click to select variables..."
+              )
             ),
             icon("cog", lib = "glyphicon"),
             em(
@@ -535,10 +540,7 @@ ui <- fluidPage(
           8,
           wellPanel(
             h4(HTML("<b>Data Dictionary</b>")),
-            tags$iframe(src = 'CaRinDB - Data dictionary.html',
-                        width = '100%', height = '400px',
-                        frameborder = 0, scrolling = 'auto'
-            )
+            DT::dataTableOutput("dt_data_dict"),
           )
         )
       )

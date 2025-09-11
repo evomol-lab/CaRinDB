@@ -193,7 +193,8 @@ CaRinDB <- CaRinDB %>%
     RefSeq_search = link_proteins(RefSeq_EFF),
     Uniprot_search = link_uniprot(Uniprot_id),
     PDB_search = link_pdb(PDB_id),
-    AlphaFold_search = link_af(Uniprot_id)
+    AlphaFold_search = link_af(Uniprot_id),
+    Risk_Mut_EFF = Risc_Mut_EFF,
   )
 
 CaRinDB_cols <- names(CaRinDB)
@@ -205,6 +206,7 @@ CaRinDB <- CaRinDB %>%
   dplyr::mutate(am_class = ifelse(is.na(am_class), "unclassified", am_class))
 
 tissue_dictionary <- read.csv("data/tissue_dictionary.csv")
+data_dictionary <- read.csv("data/data_dictionary.csv")
 tissues <- unique(tissue_dictionary$tissue)
 names(tissues) <- paste0(unique(tissue_dictionary$full_name), " (", tissues, ")")
 
@@ -221,6 +223,13 @@ am_class_palette <- c(
 #                         delim = '\t',
 #                         show_col_types = TRUE)
 load("data/CaRinAF.RData")
+
+CaRinAF <- CaRinAF %>%
+  dplyr::filter(Tipo_Mut_EFF == "MISSENSE") %>%
+  dplyr::select(-Tipo_Mut_EFF) %>%
+  dplyr::mutate(
+    Risk_Mut_EFF = Risco_Mut_EFF,
+  )
 
 CaRinAF_cols <- names(CaRinAF)
 CaRinAF <- CaRinAF %>%
@@ -251,6 +260,46 @@ callback <- JS(
   "$('div.dwnld').append(a);",
   "$('#downloadDB').hide();"
 )
+
+create_choice_list <- function(file_path) {
+  attribute_df <- read.csv(
+    file = file_path,
+    header = TRUE,
+    fill = TRUE,
+    stringsAsFactors = FALSE,
+    check.names = FALSE
+  )
+  
+  choice_list <- lapply(attribute_df, function(column) {
+    column[!is.na(column) & column != ""]
+  })
+  
+  choice_list$`External Search` <- c(
+    "Gene_search", "SNP_search", "RefSeq_search", "Uniprot_search", "AlphaFold_search"
+  )
+  
+  return(choice_list)
+}
+
+filter_grouped_choices <- function(data, choice_list) {
+  # Get the actual column names from the input data frame
+  valid_colnames <- names(data)
+
+  # Filter the choice list to keep only valid column names in each group
+  filtered_list <- lapply(choice_list, function(group) {
+    sort(intersect(group, valid_colnames))
+  })
+
+  # Remove any groups that became empty after filtering and return the result
+  return(filtered_list[sapply(filtered_list, length) > 0])
+}
+
+choice_list <- create_choice_list("data/AtributosPorCategoria-CaRinDB.csv")
+choice_list_af <- create_choice_list("data/AtributosPorCategoria-CaRinAF.csv")
+
+filtered_choices <- filter_grouped_choices(data = CaRinDB, choice_list = choice_list)
+
+filtered_choices_af <- filter_grouped_choices(data = CaRinAF, choice_list = choice_list_af)
 
 # summarytools::dfSummary(summarytools::dfSummary(CaRinDB, style="grid", method = "render"),
 #                    #varnumbers   = FALSE,

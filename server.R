@@ -55,6 +55,7 @@ server <- function(input, output, session) {
     paging = T,
     search = list(regex = TRUE),
     searchHighlight = TRUE,
+    scrollX = TRUE,
     colReorder = TRUE,
     orientation = "landscape", # <'col-md-2''dwnld'>
     dom = "<'row'<'col-md-3'l><'col-md-6'B><'col-md-3'f>><'row'<'col-md-12't>><'row'<'col-md-3'i><'col-md-1'><'col-md-8'p>>",
@@ -123,7 +124,7 @@ server <- function(input, output, session) {
     selectizeInput(
       "selectize_gene",
       label = "Type a gene symbol:",
-      choices = CaRinDB_genes,
+      choices = sort(CaRinDB_genes),
       width = "200px",
       multiple = TRUE,
       options = list(maxItems = 1)
@@ -845,6 +846,23 @@ server <- function(input, output, session) {
   plot_AF <- eventReactive(input$run_button_AF, {
     draw_plot(data_input_AF(), num_var_1_AF(), num_var_2_AF(), fact_var_AF())
   })
+
+
+  output$dt_data_dict <- DT::renderDataTable(
+    {
+      DT::datatable(
+        data_dictionary %>% arrange(Attribute),
+        class = "cell-border stripe",
+        rownames = FALSE,
+        filter = "top",
+        extensions = c("Buttons", "ColReorder"),
+        options = list.options,
+        escape = FALSE
+      )
+    },
+    server = TRUE
+  )
+
 
   output$plot_DB <- renderPlot(plot_DB())
   output$plot_AF <- renderPlot(plot_AF())

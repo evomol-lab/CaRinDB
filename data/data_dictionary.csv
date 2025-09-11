@@ -1,0 +1,99 @@
+Attribute,Description,Values
+CHROM,Chromosome where the mutation occurred,Numerical integer values 1 to 23
+POS,Position on the chromosome where the mutation occurred,Numerical interger value
+REF,Codon before mutation,Codon (NNN)
+OLD,Codon after mutation,Codon (NNN)
+Interpro_domain,The domain information (if any) from the InterPro database,Domain description
+dbNSFP_DEOGEN2_pred,Information predicted by the DEOGEN2,Possible values: D (Damaging) T (Tolerated)
+dbNSFP_MetaSVM_pred,Information predicted by MetaSVM,Possible values: D (Damaging) T (Tolerated)
+dbNSFP_fathmmMKL_coding_pred,Information predicted by the fathmm-MKL_coding,Possible values: D (Deleterious) N (Neutral)
+dbNSFP_PrimateAI_pred,Information predicted by PrimateAI,Possible values: D (Damaging) T (Tolerated)
+dbNSFP_PROVEAN_pred,Information predicted by PROVEAN,Possible values: D (Deleterious) N (Neutral)
+dbNSFP_MCAP_pred,Information predicted by M-CAP,Possible values: D (Damaging) T (Tolerated)
+dbNSFP_ClinPred_pred,Information predicted by ClinPred,Possible values: D (Damaging) T (Tolerated)
+dbNSFP_BayesDel_addAF_pred,Information predicted by the BayesDel_addAF,Possible values: D (Damaging) T (Tolerated)
+dbNSFP_ExAC_AF,Allelic frequency of ExAC,Numerical value ranging from 0 to 1.
+dbNSFP_Polyphen2_HVAR_pred,Information predicted by Polyphen2_HVAR,Possible values: D (Damaging) P (Probably damaging) B (Benign)
+dbNSFP_SIFT_pred,Information predicted by the SIFT,Possible values: D (Damaging) T (Tolerated)
+dbNSFP_FATHMM_pred,Information predicted by FATHMM,Possible values: D (Damaging) T (Tolerated)
+dbNSFP_SIFT4G_pred,Information predicted by SIFT4G,Possible values: D (Damaging) T (Tolerated)
+dbNSFP_LRT_pred,Information predicted by the LRT,Possible values: D (Deleterious) N (Neutral) U (Unknow)
+dbNSFP_fathmmXF_coding_pred,Information predicted by the fathmm-XF_coding,Possible values: D (Deleterious) N (Neutral)
+dbNSFP_BayesDel_noAF_pred,Information predicted by the BayesDel_noAF,Possible values: D (Damaging) T (Tolerated)
+dbNSFP_gnomAD_exomes_AF,Allelic frequency of the gnomAD,Numerical value ranging from 0 to 1.
+dbNSFP_Aloft_pred,Information predicted by Aloft,Possible values: Dominant Recessive Tolerant
+dbNSFP_MutationTaster_pred,Information predicted by MutationTaster,Possible values: D (Probably Deleterious) N (Probably Harmless) A (Deleterious) P (Harmless)
+dbNSFP_MetaLR_pred,Information predicted by MetaLR,Possible values: D (Damaging) T (Tolerated)
+dbNSFP_LISTS2_pred,Information predicted by LIST-S2,Possible values: D (Damaging) T (Tolerated)
+dbNSFP_Polyphen2_HDIV_pred,Information predicted by the Polyphen2_HDIV,Possible values: D (Damaging) P (Probably damaging) B (Benign)
+dbNSFP_MutationAssessor_pred,Information predicted by MutationAssessor,Possible values: H (High) M (Medium) L (Low) N (Neutral)
+am_pathogenicity *,Pathogenicity score from AlphaMissense,Numerical values ranging from 0 to 1.
+am_class *,AlphaMissense mutation classification,Possible values: Ambiguous Benign Pathogenic
+VariantEffect_EFF,Classification of Single Nucleotide Polymorphism,"Possible values: NON_SYNONYMOUS_CODING NON_SYNONYMOUS_CODING+SPLICE_SITE_REGION NON_SYNONYMOUS_START SYNONYMOUS_CODING SPLICE_SITE_ACCEPTOR+INTRON START_LOST STOP_GAINED STOP_GAINED+SPLICE_SITE_REGION STOP_LOST, START_LOST STOP_LOST+SPLICE_SITE_REGION"
+Risk_Mut_EFF,Risk of mutation,"Possible values: MODERATE, HIGH, LOW"
+Point_Mutation_EFF,Point of mutation at the codon,Format: aaG/aaT
+Changepr_F,A nomenclature that represents the change that occurs in a protein (source: https://archive.hgvsnomenclature.org/ ).,Formats: p.Pro609Ala p.Ser43* p.Ter327Argext*? p.Met1?
+changeProt_am,A nomenclature that represents the change that occurs in a protein,Format: G765V
+changecDNA_EFF,A nomenclature that represents the change that has occurred in a codon (source: https://archive.hgvsnomenclature.org/ ),Format: c.502T>C
+Gene_EFF,Gene,Gene Symbol
+RefSeq_EFF,Reference Sequence database Accession number,Example: NM_001282426.1
+Exon_EFF,Exon number,Numerical value ranging from 1 to n.
+Pos_Point_Mutation_EFF,Position of the mutation in the codon,"The Pos_Point_Mutation_EFF attribute will be rendered as follows: - Point_Mutation: aaC/aaT, Pos_Point_Mutation will have value 3. - Point_Mutation: cTg/cGg, Pos_Point_Mutation will have value 2. - Point_Mutation: Ctg/Atg, Pos_Point_Mutation will have value 1."
+poschangecDNA_EFF,Position in the transcript where the mutation occurred,Numerical value ranging from 1 to n.
+typechangecDNA_EFF,Identify the type of change.,Possible values: > (replacement) del (deletion) DUP (duplication)
+aminBefore,Amino acid before mutation (reference),Amino acid three letter abbreviations.
+aminAfter,Amino acid after mutation (alternative),Amino acid three letter abbreviations.
+poschangeProt,Position on the protein where the mutation occurred,Numerical value ranging from 1 to n.
+typechangeProt,Identify the type of change.,Possible values: subst (replacement) del (deletion) fs (frameshift: A shift on the reading frame between the start and stop codon of the coding sequence). Translation termination .
+SNP_ID_COMMON,Id from the dbSNP database,Example: rs1393348728
+COMMON,It identifies whether or not the mutation is frequent in the population.,Possible values: 0 (not common in the population) 1 (common in population)
+PolyPhen2_Dam_pred,Junction of the two PolyPhen2 predictors.,"The information will be generated based on the following conditions: 1, if the dbNSFP_PolyPhen2_HDIV_pred or dbNSFP_PolyPhen2_HVAR_pred value are D ou P. 0, if the dbNSFP_PolyPhen2_HDIV_pred or dbNSFP_PolyPhen2_HVAR_pred values are B."
+Ndamage,Number of predictors that predicted the mutation as damaging in relation to the total number of predictors tested.,"Format: n/20, where: n - Number of predictors predicting the mutation as damaging 20 - Total number of predictors tested."
+NdamageCalc,Number of predictors that predicted the mutation as damaging.,Numerical interger values ranging from 0 to 20.
+Deleterious,"Calculated as follows: - Expression1: The SIFT attribute, or the PolyPhen2_Dan attribute or the PROVEAN attribute must have the value D or P. - Expression2: The attribute dbNSFP_gnomAD_exomes_AF must be less than 10 -4 . - Expression3: The NdamageCalc attribute should be >3 - Expression4: The COMMON attribute should be 0 Deleteria = Expressao1 and Expressao2 and Expressao3 and Expressao4",Binary format: 0 = Non-deleterious (False). 1 = Deleterious (True).
+Deleterious5,"Calculated as follows: - Expression1: The SIFT attribute, or the PolyPhen2_Dan attribute or the PROVEAN attribute  should have the value D or P. - Expression2: The attribute dbNSFP_gnomAD_exomes_AF must be less than 10 -4 . Expression3: The NdamageCalc attribute  should be >= 5 . - Expression4: The COMMON attribute should be 0. Deleteria5 = Expressao1 and Expressao2 and  Expressao3 and Expressao4",Binary format: 0 = Non-Deleterious5 (False). 1 = Deleterious5 (True).
+Deleterious10,"Calculated as follows: - Expression1: The SIFT attribute, or the PolyPhen2_Dan attribute or the PROVEAN attribute must have the value D or P. - Expression2: The attribute dbNSFP_gnomAD_exomes_AF must be less than 10 -4 . - Expression3: The NdamageCalc attribute should be >= 10 . - Expression4: The COMMON attribute should be 0. Deleteria10 = Expressao1 and Expressao2 and Expressao3 and Expressao4",Binary format: 0 = Non-Deleterious10 (False). 1 = Deleterious10 (True).
+Deleterious11,"Calculated as follows: - Expression1: The SIFT attribute, or the PolyPhen2_Dan attribute or the PROVEAN attribute must have the value D or P. - Expression2: The attribute dbNSFP_gnomAD_exomes_AF must be less than 10 -4 . - Expression3: The NdamageCalc attribute should be >= 11 . - Expression4: The COMMON attribute should be 0. Deleteria10 = Expressao1 and Expressao2 and Expressao3 and Expressao4",Binary format: 0 = Non-Deleterious11 (False). 1 = Deleterious11 (True).
+Uniprot_id,UniProtKB database identifier,Example: Q8WWA0.
+PDB_id,Protein Data Bank database identifier,Example: 1ZEH.
+Resolution #,"Resolution of the three-dimensional structure of the protein (x-ray crystalography). The lower the resolution, the better the quality.",Numerical value ranging from 0 to 3.0 Å.
+Swiss-Prot #,Swiss-Prot database identifier,Example: ITLN1_HUMAN.
+db_align_beg #,Starting Position of Alignment in UNIPROT entry.,Numerical interger ranging from 0 to n.
+db_align_end #,Final position of the alignment in UNIPROT entry.,Numerical interger ranging from 0 to n.
+pdbx_auth_seq_align_beg #,Initial position of the alignment in the PDB (submitted by the author).,Numerical interger ranging from 0 to n.
+pdbx_auth_seq_align_end #,Final position of the alignment in the PDB (submitted by the author).,Numerical interger ranging from 0 to n.
+pdbx_strand_id #,Strand identifier in PDB.,Letter or numerical interger.
+seq_align_beg #,Initial position of the alignment in the PDB (after validation by the Protein Data Bank).,Numerical interger ranging from 0 to n.
+seq_align_end #,Final position of the alignment in the PDB (after validation by the Protein Data Bank).,Numerical interger ranging from 0 to n.
+db_name #,Database of validation.,Example: UNP (UNIPROT).
+pdbx_align_begin #,Initial position of alignment between the PDB and the database in the PDB file.,Numerical interger ranging from 0 to n.
+len_seq #,Size of the alignment sequence between PDB and Uniprot,Numerical interger.
+Blosum62,Score associated with the frequency of substitution of one amino acid for another according to the Blosum62 matrix.,Numerical interger.
+groupBefore,Amino acid classification group before mutation.,"Possible values: nonpolar, positivecharge, polar, negativecharge, aromatic."
+groupAfter,Amino acid classification group after mutation.,"Possible values: nonpolar, positivecharge, polar, negativecharge, aromatic."
+groupChange,Amino acid classification group before mutation and after mutation.,Format: Nonpolar Runner positivechargeTOpolar
+aminBeforeEssential,Classifies whether the amino acid before the mutation is essential or not.,Possible values: 1 (Essential Amino Acid) 0 (Non-essential amino acid)
+aminAfterEssential,Classifies whether the amino acid after the mutation is essential or not.,Possible values: 1 (Essential Amino Acid) 0 (Non-essential amino acid) - (Amino Acid Free)
+essencialChange,Essential amino acid before mutation and after mutation.,"Possible values: 0TO1 , 0TO0 , 1TO1 , 0TO- , 1TO0 , 1TO- ."
+substitution,Classifies whether the DNA replacement that occurred in the mutation was a transition or a transversion.,Possible values: 1 (transversion) 0 (transition)
+NodeId_RING,"The node of the interaction can be an amino acid or a binding molecule. Contains the following information: Chain, Node Position, and the Node. Ligands were not included in the AlphaFold2 structures .",Format: A:61:_:GLN
+Dssp_RING,Secondary structure calculated with the DSSP algorithm (Included in the RING tool).,"Possible values: H : 4-turn helix (alpha helix). Minimum length 4 residues. E : extended strand in parallel and/or anti-parallel beta sheet conformation. Minimum length 2 residues . S : bend (the only non-hydrogen bond based assignment). T : hydrogen bonded turn (3, 4 or 5 turn). G : 3-turn helix (3-10 helix). Minimum length 3 residues. B : residue in isolated β-bridge (single pair beta sheet hydrogen bond formation). I : 5-turn helix (π helix). Min. length 5 residues."
+Degree_RING,Number of interactions of the node (without mutation).,Numerical interger.
+Bfactor_CA_RING,alpha-carbon B-factor (experimental structures only).,Numerical interger.
+pLDDT_Global *,The mean predicted local distance difference test (pLDDT) for all residues in a structure (Only for AlphaFold2 structures).,Numerical values ranging from 0 (worse) to 100 (better).
+pLDDT_RING *,"The predicted local distance difference test (pLDDT), per-residue, calculated by AlphaFold2 (Only for AlphaFold2 structures).",Numerical values ranging from 0 (worse) to 100 (better).
+F_AF *,"AlphaFold fragment identificator. In proteins with more than 2700 residues, the program analyzes overlapping fragments of 1400 residues. Each one is numbered, Fn (n = 1,2,3,...).",Numerical interger.
+Inter_Lig_tot #,Total number of residue-ligand interactions.,Numerical interger.
+Inter_Res_tot,Total number of residue-residue interactions.,Numerical interger.
+Inter_IAC_Lig_tot #,Total number of IAC-type (Generic interaction) ligand interactions.,Numerical interger.
+Inter_VDW_Lig_tot #,Total number of ligand van der Waals interactions.,Numerical interger.
+Inter_VDW_Res_tot #,Total interactions between VDW residuals,Numerical interger.
+Inter_HBOND_Res_tot,Total interactions between HBOND residuals,Numerical interger.
+Inter_PIPISTACK_Res_tot,Total interactions between PIPISTACKK residuals,Numerical interger.
+Inter_IONIC_Res_tot,Total interactions between IONIC-like residues,Numerical interger.
+Inter_SSBOND_Res_tot,Total interactions between SSBOND residues,Numerical interger.
+Inter_PICATION_Res_tot,Total interactions between PICATION residuals,Numerical interger.
+triangles_node,Number of triangles that this node forms with other waste that it interacts with,Numerical interger.
+clusteringCoef_node,Node clustering coefficient,Numerical values ranging from 0 to 1.
+betweennessWeighted_node,node betweenness,Numerical values ranging from 0 to 1.
+Tissue,"Tissue where the mutation occurred Possible values: ACC (Adrenocortical carcinoma) BLCA (Bladder Urothelial Carcinoma) BRCA (Breast invasive carcinoma) CESC (Cervical squamous cell carcinoma and endocervical adenocarcinoma) CHOL (Cholangiocarcinoma) COAD (Colon adenocarcinoma) DLBC (Lymphoid Neoplasm Diffuse Large B-cell Lymphoma) ESCA (Esophageal carcinoma) GBM (Glioblastome multiform) HNSC (Head and Neck squamous cell carcinoma) Keech (kidney chromophobe) KIRC (Kidney renal clear cell carcinoma) KIRP (Kidney renal papillary cell carcinoma) LAML (Acute Myeloid Leukemia) LGG (Brain Lower Grade Glioma) LIHC (Liver hepatocellular carcinoma), LUAD (Lung adenocarcinoma) LUSC (Lung squamous cell carcinoma) MESO (Mesothelioma) OV (Ovarian serous cystadenocarcinoma) PAAD (Pancreatic adenocarcinoma) PCPG (Pheochromocytoma and Paraganglioma) PRAD (Prostate adenocarcinoma) READ (Rectum adenocarcinoma) SARC (Sarcoma) SKCM (Skin Cutaneous Melanoma) STAD (Stomach adenocarcinoma) TGCT (do inglês, Testicular Germ Cell Tumors) THYM (Thymoma) THCA (Thyroid carcinoma) UCEC (Uterine Corpus Endometrial Carcinoma) UCS (Uterine Carcinosarcoma) UVM (Uveal Melanoma)",Tissue Abbreviation Example: LUAD
