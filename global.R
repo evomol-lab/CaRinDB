@@ -193,7 +193,8 @@ CaRinDB <- CaRinDB %>%
     RefSeq_search = link_proteins(RefSeq_EFF),
     Uniprot_search = link_uniprot(Uniprot_id),
     PDB_search = link_pdb(PDB_id),
-    AlphaFold_search = link_af(Uniprot_id)
+    AlphaFold_search = link_af(Uniprot_id),
+    Risk_Mut_EFF = Risc_Mut_EFF,
   )
 
 CaRinDB_cols <- names(CaRinDB)

@@ -30,9 +30,8 @@ Uniprot_id,,,Deleterious
 ,,,Ndamage
 ,,,NdamageCalc
 ,,,PolyPhen2_Dam_pred
-,,,RisK_Mut_EFF
+,,,Risk_Mut_EFF
 ,,,Tissue
-,,,Type_Mut_EFF
 ,,,typechangecDNA_EFF
 ,,,typechangeProt
 ,,,VariantEffect_EFF
