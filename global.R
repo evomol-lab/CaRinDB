@@ -223,6 +223,13 @@ am_class_palette <- c(
 #                         show_col_types = TRUE)
 load("data/CaRinAF.RData")
 
+CaRinAF <- CaRinAF %>%
+  dplyr::filter(Tipo_Mut_EFF == "MISSENSE") %>%
+  dplyr::select(-Tipo_Mut_EFF) %>%
+  dplyr::mutate(
+    Risk_Mut_EFF = Risco_Mut_EFF,
+  )
+
 CaRinAF_cols <- names(CaRinAF)
 CaRinAF <- CaRinAF %>%
   dplyr::mutate(
