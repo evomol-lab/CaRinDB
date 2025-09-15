@@ -818,17 +818,17 @@ server <- function(input, output, session) {
   observeEvent(data_input_DB(), {
     choices_num_DB <- c(not_sel, names(data_input_DB() %>% select(which(sapply(., is.double)))))
     choices_fct_DB <- c(not_sel, names(data_input_DB() %>% select(which(sapply(., is.character)))))
-    updateSelectInput(inputId = "num_var_1_DB", choices = choices_num_DB)
-    updateSelectInput(inputId = "num_var_2_DB", choices = choices_num_DB)
-    updateSelectInput(inputId = "fact_var_DB", choices = choices_fct_DB)
+    updateSelectInput(inputId = "num_var_1_DB", choices = sort(choices_num_DB))
+    updateSelectInput(inputId = "num_var_2_DB", choices = sort(choices_num_DB))
+    updateSelectInput(inputId = "fact_var_DB", choices = sort(choices_fct_DB))
   })
 
   observeEvent(data_input_AF(), {
     choices_AF_num <- c(not_sel, names(data_input_AF() %>% select(which(sapply(., is.double)))))
     choices_AF_fct <- c(not_sel, names(data_input_AF() %>% select(which(sapply(., is.character)))))
-    updateSelectInput(inputId = "num_var_1_AF", choices = choices_AF_num)
-    updateSelectInput(inputId = "num_var_2_AF", choices = choices_AF_num)
-    updateSelectInput(inputId = "fact_var_AF", choices = choices_AF_fct)
+    updateSelectInput(inputId = "num_var_1_AF", choices = sort(choices_AF_num))
+    updateSelectInput(inputId = "num_var_2_AF", choices = sort(choices_AF_num))
+    updateSelectInput(inputId = "fact_var_AF", choices = sort(choices_AF_fct))
   })
 
   num_var_1_DB <- eventReactive(input$run_button_DB, input$num_var_1_DB)
