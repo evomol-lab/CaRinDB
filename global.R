@@ -195,7 +195,9 @@ CaRinDB <- CaRinDB %>%
     PDB_search = link_pdb(PDB_id),
     AlphaFold_search = link_af(Uniprot_id),
     Risk_Mut_EFF = Risc_Mut_EFF,
-  )
+  ) %>%
+  dplyr::filter(Type_Mut_EFF == "MISSENSE") %>%
+  dplyr::select(-Type_Mut_EFF)
 
 CaRinDB_cols <- names(CaRinDB)
 
