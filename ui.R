@@ -195,6 +195,7 @@ ui <- fluidPage(
             selectInput("num_var_1_DB", "x-axis", choices = c(not_sel)),
             selectInput("num_var_2_DB", "y-axis", choices = c(not_sel)),
             selectInput("fact_var_DB", "Factor Variable", choices = c(not_sel)),
+            uiOutput("factor_multiselect_DB_ui"),
             br(),
             actionButton("run_button_DB", "Run Analysis", icon = icon("play"))
           ),
@@ -328,6 +329,7 @@ ui <- fluidPage(
             selectInput("num_var_1_AF", "x-axis", choices = c(not_sel)),
             selectInput("num_var_2_AF", "y-axis", choices = c(not_sel)),
             selectInput("fact_var_AF", "Factor Variable", choices = c(not_sel)),
+            uiOutput("factor_multiselect_AF_ui"),
             br(),
             actionButton("run_button_AF", "Run Analysis", icon = icon("play"))
           ),
