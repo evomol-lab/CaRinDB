@@ -717,7 +717,10 @@ server <- function(input, output, session) {
 
   not_sel <- "Not Selected"
 
-  draw_plot <- function(data_input, num_var_1, num_var_2, fact_var) {
+  draw_plot <- function(data_input, num_var_1, num_var_2, fact_var, fact_var_options) {
+    if (!is.null(fact_var_options)) {
+      data_input <- data_input[data_input[[fact_var]] %in% fact_var_options, ]
+    }
     # if(fact_var!=not_sel){
     #   data_input[,(fact_var):= as.factor(data_input[,get(fact_var)])]
     # }
@@ -823,12 +826,54 @@ server <- function(input, output, session) {
     updateSelectInput(inputId = "fact_var_DB", choices = sort(choices_fct_DB))
   })
 
+  output$factor_multiselect_DB_ui <- renderUI({
+    req(input$fact_var_DB)
+    if (input$fact_var_DB != not_sel) {
+      unique_values <- sort(unique(data_input_DB()[[input$fact_var_DB]]))
+      if (length(unique_values) > 10) {
+        pickerInput(
+          inputId = "factor_multiselect_DB",
+          label = "Select Factors",
+          choices = unique_values,
+          selected = unique_values[1:10],
+          options = list(
+            `actions-box` = TRUE,
+            size = 10,
+            `selected-text-format` = "count > 5"
+          ),
+          multiple = TRUE
+        )
+      }
+    }
+  })
+
   observeEvent(data_input_AF(), {
     choices_AF_num <- c(not_sel, names(data_input_AF() %>% select(which(sapply(., is.double)))))
     choices_AF_fct <- c(not_sel, names(data_input_AF() %>% select(which(sapply(., is.character)))))
     updateSelectInput(inputId = "num_var_1_AF", choices = sort(choices_AF_num))
     updateSelectInput(inputId = "num_var_2_AF", choices = sort(choices_AF_num))
     updateSelectInput(inputId = "fact_var_AF", choices = sort(choices_AF_fct))
+  })
+
+  output$factor_multiselect_AF_ui <- renderUI({
+    req(input$fact_var_AF)
+    if (input$fact_var_AF != not_sel) {
+      unique_values <- sort(unique(data_input_AF()[[input$fact_var_AF]]))
+      if (length(unique_values) > 10) {
+        pickerInput(
+          inputId = "factor_multiselect_AF",
+          label = "Select Factors",
+          choices = unique_values,
+          selected = unique_values[1:10],
+          options = list(
+            `actions-box` = TRUE,
+            size = 10,
+            `selected-text-format` = "count > 5"
+          ),
+          multiple = TRUE
+        )
+      }
+    }
   })
 
   num_var_1_DB <- eventReactive(input$run_button_DB, input$num_var_1_DB)
@@ -840,11 +885,11 @@ server <- function(input, output, session) {
   fact_var_AF <- eventReactive(input$run_button_AF, input$fact_var_AF)
 
   plot_DB <- eventReactive(input$run_button_DB, {
-    draw_plot(data_input_DB(), num_var_1_DB(), num_var_2_DB(), fact_var_DB())
+    draw_plot(data_input_DB(), num_var_1_DB(), num_var_2_DB(), fact_var_DB(), input$factor_multiselect_DB)
   })
 
   plot_AF <- eventReactive(input$run_button_AF, {
-    draw_plot(data_input_AF(), num_var_1_AF(), num_var_2_AF(), fact_var_AF())
+    draw_plot(data_input_AF(), num_var_1_AF(), num_var_2_AF(), fact_var_AF(), input$factor_multiselect_AF)
   })
 
 
