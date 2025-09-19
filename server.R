@@ -58,7 +58,7 @@ server <- function(input, output, session) {
     scrollX = TRUE,
     colReorder = TRUE,
     orientation = "landscape", # <'col-md-2''dwnld'>
-    dom = "<'row'<'col-md-3'l><'col-md-6'B><'col-md-3'f>><'row'<'col-md-12't>><'row'<'col-md-3'i><'col-md-1'><'col-md-8'p>>",
+    dom = "<'row'<'col-md-5'l><'col-md-4 d-flex justify-content-center'B><'col-md-3'f>><'row'<'col-md-12't>><'row'<'col-md-3'i><'col-md-1'><'col-md-8'p>>",
     # dom = 'lBfrtip',
     buttons =
       list(
@@ -71,7 +71,7 @@ server <- function(input, output, session) {
         ),
         list(
           extend = "csv",
-          text = '<span class="glyphicon glyphicon-download-alt"></span> Current Page (csv)',
+          text = '<span class="glyphicon glyphicon-download-alt"></span> Page (csv)',
           filename = "CaRinDB_page",
           exportOptions = list(
             modifier = list(page = "current")

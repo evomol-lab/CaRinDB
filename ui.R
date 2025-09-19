@@ -278,7 +278,9 @@ ui <- fluidPage(
             ),
             tabPanel(
               "Dataset",
-              downloadButton("downloadDB", "all data"),
+              div(style = "margin-bottom: 10px; text-align: center;",
+                  downloadButton("downloadDB", "Download all data")
+              ),
               shinycssloaders::withSpinner(DT::dataTableOutput("tb_CaRinDB"), size = 0.5, type = 1, color.background = "white")
             ),
             tabPanel(
@@ -413,7 +415,9 @@ ui <- fluidPage(
             ),
             tabPanel(
               "Dataset",
-              downloadButton("downloadAF", "all data"),
+              div(style = "margin-bottom: 10px; text-align: center;",
+                  downloadButton("downloadAF", "Download all data")
+              ),
               shinycssloaders::withSpinner(DT::dataTableOutput("tb_CaRinAF"), size = 0.5, type = 1, color.background = "white")
             ),
             tabPanel(
