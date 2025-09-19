@@ -811,11 +811,11 @@ server <- function(input, output, session) {
   }
 
   data_input_DB <- reactive({
-    dplyr::select(CaRinDB[CaRinDB$Tissue %in% input$select_tissues, ], c(-3, -5, -7))
+    dplyr::select(CaRinDB[CaRinDB$Tissue %in% input$select_tissues, ], c(-ends_with("search")))
   })
 
   data_input_AF <- reactive({
-    dplyr::select(CaRinAF[CaRinAF$Tissue %in% input$select_tissues_AF, ], c(-3, -5, -7))
+    dplyr::select(CaRinAF[CaRinAF$Tissue %in% input$select_tissues_AF, ], c(-ends_with("search")))
   })
 
   observeEvent(data_input_DB(), {
@@ -830,15 +830,15 @@ server <- function(input, output, session) {
     req(input$fact_var_DB)
     if (input$fact_var_DB != not_sel) {
       unique_values <- sort(unique(data_input_DB()[[input$fact_var_DB]]))
-      if (length(unique_values) > 10) {
+      if (length(unique_values) > 5) {
         pickerInput(
           inputId = "factor_multiselect_DB",
           label = "Select Factors",
           choices = unique_values,
-          selected = unique_values[1:10],
+          selected = unique_values[1:5],
           options = list(
             `actions-box` = TRUE,
-            size = 10,
+            size = 5,
             `selected-text-format` = "count > 5"
           ),
           multiple = TRUE
@@ -859,15 +859,15 @@ server <- function(input, output, session) {
     req(input$fact_var_AF)
     if (input$fact_var_AF != not_sel) {
       unique_values <- sort(unique(data_input_AF()[[input$fact_var_AF]]))
-      if (length(unique_values) > 10) {
+      if (length(unique_values) > 5) {
         pickerInput(
           inputId = "factor_multiselect_AF",
           label = "Select Factors",
           choices = unique_values,
-          selected = unique_values[1:10],
+          selected = unique_values[1:5],
           options = list(
             `actions-box` = TRUE,
-            size = 10,
+            size = 5,
             `selected-text-format` = "count > 5"
           ),
           multiple = TRUE
