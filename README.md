@@ -12,6 +12,28 @@ Unlike existing tools, CaRinDB facilitates integration of polymorphism data with
 
 **Contact**: The CaRinDB team is available to assist users who want to import their data on demand. If you have some question, feedback, or request: [contact us](https://bioinfo.imd.ufrn.br/CaRinDB/).
 
+## Citation
+If you use CaRinDB data or jupyter notebooks, please cite our article:
+
+Daniela Coelho Batista Guedes Pereira, João Vitor Ferreira Cavalcante, Laise Florentino Cavalcanti, Raul Maia Falcão, Jorge Estefano Santana de Souza, Rodrigo Juliani Siqueira Dalmolin, Thaís Gaudencio do Rêgo, Serghei Mangul, Gustavo Antônio de Souza, Patrick Terrematte, João Paulo Matos Santos Lima. **CaRinDB: an integrated database of common cancer mutations and residue interaction network parameters**, **Bioinformatics Advances**, Volume 6, Issue 1, 2026, vbaf313, [https://doi.org/10.1093/bioadv/vbaf313](https://doi.org/10.1093/bioadv/vbaf313)
+
+```bibtex
+@article{10.1093/bioadv/vbaf313,
+    author = {Guedes Pereira, Daniela Coelho Batista and Ferreira Cavalcante, João Vitor and Cavalcanti, Laise Florentino and Falcão, Raul Maia and Santana de Souza, Jorge Estefano and Dalmolin, Rodrigo Juliani Siqueira and Rêgo, Thaís Gaudencio do and Mangul, Serghei and de Souza, Gustavo Antônio and Terrematte, Patrick and Lima, João Paulo Matos Santos},
+    title = {CaRinDB: an integrated database of common cancer mutations and residue interaction network parameters},
+    journal = {Bioinformatics Advances},
+    volume = {6},
+    number = {1},
+    pages = {vbaf313},
+    year = {2026},
+    month = {01},
+    issn = {2635-0041},
+    doi = {10.1093/bioadv/vbaf313},
+    url = {https://doi.org/10.1093/bioadv/vbaf313},
+    eprint = {https://academic.oup.com/bioinformaticsadvances/article-pdf/6/1/vbaf313/68211468/vbaf313.pdf},
+}
+```
+
 ## Serving the application
 
 Run a Docker container of CaRinDB on your local machine through the terminal.
