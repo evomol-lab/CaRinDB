@@ -1,5 +1,21 @@
 # if(!require(shinythemes, quietly=TRUE, warn.conflicts=FALSE)){ install.packages('shinythemes', quiet=TRUE) }
 not_sel <- "Not Selected"
+
+bibtex <- '@article{10.1093/bioadv/vbaf313,
+    author = {Guedes Pereira, Daniela Coelho Batista and Ferreira Cavalcante, João Vitor and Cavalcanti, Laise Florentino and Falcão, Raul Maia and Santana de Souza, Jorge Estefano and Dalmolin, Rodrigo Juliani Siqueira and Rêgo, Thaís Gaudencio do and Mangul, Serghei and de Souza, Gustavo Antônio and Terrematte, Patrick and Lima, João Paulo Matos Santos},
+    title = {CaRinDB: an integrated database of common cancer mutations and residue interaction network parameters},
+    journal = {Bioinformatics Advances},
+    volume = {6},
+    number = {1},
+    pages = {vbaf313},
+    year = {2026},
+    month = {01},
+    issn = {2635-0041},
+    doi = {10.1093/bioadv/vbaf313},
+    url = {https://doi.org/10.1093/bioadv/vbaf313},
+    eprint = {https://academic.oup.com/bioinformaticsadvances/article-pdf/6/1/vbaf313/68211468/vbaf313.pdf},
+}'
+
 # ==== ui.R ===============================================================
 ui <- fluidPage(
   use_cicerone(),
@@ -495,36 +511,31 @@ ui <- fluidPage(
           wellPanel(
             h4(HTML("<b>Citation</b>")),
             h5(HTML(
-              "<i># If you have used CaRinDB for your research, please cite:</i>"
+              "<i># If you use CaRinDB data or jupyter notebooks, please cite our article:</i>"
             )),
             
-            p(strong("CaRinDB: An integrated database of common cancer mutations and residue interaction network parameters."), 
-              "Daniela Coelho Batista Guedes Pereira", tags$sup("1,2"),",",
-              "João Vitor Ferreira Cavalcante", tags$sup("1"),",", 
-              "Raul Maia Falcão",tags$sup("1"),",",
-              "Jorge Estefano Santana de Souza",tags$sup("1"),",",
-              "Rodrigo Juliani Siqueira Dalmolin", tags$sup("1"),",",
-              "Gustavo Antônio de Souza", tags$sup("1"),",",
-              "Thaís Gaudencio do Rêgo", tags$sup("1,2"),",",
-              "Patrick Terrematte", tags$sup("1,2"),",",
-              "and João Paulo Matos Santos Lima",tags$sup("1,3"),",",
-              strong("To be published.")),
-            h5(strong("Affiliations")),
-            HTML(
-              paste0(
-                tags$sup("1"),
-                " Bioinformatics Multidisciplinary Environment (BioME),  Digital Metropolis Institute (IMD), Federal University of Rio Grande do Norte (UFRN), Brazil."
+            p("Daniela Coelho Batista Guedes Pereira, João Vitor Ferreira Cavalcante, Laise Florentino Cavalcanti, Raul Maia Falcão, Jorge Estefano Santana de Souza,",
+              "Rodrigo Juliani Siqueira Dalmolin, Thaís Gaudencio do Rêgo, Serghei Mangul, Gustavo Antônio de Souza, Patrick Terrematte, João Paulo Matos Santos Lima.",
+              strong("CaRinDB: an integrated database of common cancer mutations and residue interaction network parameters, Bioinformatics Advances"), 
+              ", Volume 6, Issue 1, 2026, vbaf313,",
+              a("https://doi.org/10.1093/bioadv/vbaf313")),
+            br(),
+            tags$button(
+            "Copiar BibTeX",
+            type = "button",
+            onclick = "
+              navigator.clipboard.writeText(
+                document.getElementById('bibtex-code').innerText
+              );
+              this.innerText = 'Copiado!';
+            "
+            ),
+            tags$pre(
+              tags$code(
+                id = "bibtex-code",
+                bibtex
               )
             ),
-            br(),
-            HTML(paste0(
-              tags$sup("2"), " Centro de Informática, Universidade Federal da Paraíba (UFPB), João Pessoa, PB, Brazil."
-            )),
-            br(),
-            HTML(paste0(
-              tags$sup("3"), " Institute of Tropical Medicine (IMT), UFRN, Natal, RN, Brazil"
-            )),
-            br(),
             br(),
             h4(HTML("<b>Contact</b>")),
             p("The CaRinDB team is available to assist users who want to import their data on demand. If you have some question, feedback, or request, contact the ",
