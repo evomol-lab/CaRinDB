@@ -1,7 +1,7 @@
 # if(!require(shinythemes, quietly=TRUE, warn.conflicts=FALSE)){ install.packages('shinythemes', quiet=TRUE) }
 not_sel <- "Not Selected"
 
-bibtex <- '@article{10.1093/bioadv/vbaf313,
+bibtex <- "@article{10.1093/bioadv/vbaf313,
     author = {Guedes Pereira, Daniela Coelho Batista and Ferreira Cavalcante, João Vitor and Cavalcanti, Laise Florentino and Falcão, Raul Maia and Santana de Souza, Jorge Estefano and Dalmolin, Rodrigo Juliani Siqueira and Rêgo, Thaís Gaudencio do and Mangul, Serghei and de Souza, Gustavo Antônio and Terrematte, Patrick and Lima, João Paulo Matos Santos},
     title = {CaRinDB: an integrated database of common cancer mutations and residue interaction network parameters},
     journal = {Bioinformatics Advances},
@@ -13,8 +13,8 @@ bibtex <- '@article{10.1093/bioadv/vbaf313,
     issn = {2635-0041},
     doi = {10.1093/bioadv/vbaf313},
     url = {https://doi.org/10.1093/bioadv/vbaf313},
-    eprint = {https://academic.oup.com/bioinformaticsadvances/article-pdf/6/1/vbaf313/68211468/vbaf313.pdf},
-}'
+    eprint = {https://academic.oup.com/bioinformaticsadvances/article-pdf/6/1/vbaf313/68211468/vbaf313.pdf}
+}"
 
 # ==== ui.R ===============================================================
 ui <- fluidPage(
@@ -37,7 +37,11 @@ ui <- fluidPage(
           display: flex;
           justify-content: center;
         }
-        "
+        pre code {
+          display: block;
+          margin: 0;
+          padding: 0;
+      }"
       )
     ),
     # includeHTML("www/google-analytics.html")
@@ -518,23 +522,22 @@ ui <- fluidPage(
               "Rodrigo Juliani Siqueira Dalmolin, Thaís Gaudencio do Rêgo, Serghei Mangul, Gustavo Antônio de Souza, Patrick Terrematte, João Paulo Matos Santos Lima.",
               strong("CaRinDB: an integrated database of common cancer mutations and residue interaction network parameters, Bioinformatics Advances"), 
               ", Volume 6, Issue 1, 2026, vbaf313,",
-              a("https://doi.org/10.1093/bioadv/vbaf313")),
-            br(),
+              tags$a(
+                href="https://doi.org/10.1093/bioadv/vbaf313",
+                target = "_blank",
+                "https://doi.org/10.1093/bioadv/vbaf313"
+                ),
+              ".",
+              ),
+            tags$pre(tags$code(id = "bibtex-code", bibtex)
+            ),
             tags$button(
-            "Copiar BibTeX",
+            "Copy BibTeX",
             type = "button",
-            onclick = "
-              navigator.clipboard.writeText(
+            onclick = "navigator.clipboard.writeText(
                 document.getElementById('bibtex-code').innerText
               );
-              this.innerText = 'Copiado!';
-            "
-            ),
-            tags$pre(
-              tags$code(
-                id = "bibtex-code",
-                bibtex
-              )
+              this.innerText = 'Copied.';"
             ),
             br(),
             h4(HTML("<b>Contact</b>")),
