@@ -5,6 +5,7 @@ RUN apt-get update && apt-get install -y \
     sudo \
     pandoc \
     #pandoc-citeproc \
+    tcl-dev tk-dev \
     libcurl4-gnutls-dev \
     libcairo2-dev \
     libxt-dev \
@@ -29,11 +30,9 @@ RUN R -e "install.packages('Rcpp', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('magick', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('remotes', repos='http://cran.rstudio.com/')"
 RUN R -e "remotes::install_github('rapporter/pander')"
-RUN R -e "remotes::install_github('dcomtois/summarytools', ref = '0-8-9')"
-#RUN R -e "remotes::install_github('dcomtois/summarytools', ref = 'dev-current')"
-#RUN R -e "remotes::install_github('dcomtois/summarytools', ref = 'no-x11-check')"
-#RUN R -e "install.packages('cicerone', repos='http://cran.rstudio.com/')"
-RUN R -e "remotes::install_github('JohnCoene/cicerone@v1.0.4')"
+RUN R -e "install.packages('summarytools')"
+RUN R -e "remotes::install_version('cicerone', version='1.0.4', repos='http://cran.rstudio.com/')"
+
 
 RUN mkdir -p /srv/CaRinDB/CaRinDB
 
